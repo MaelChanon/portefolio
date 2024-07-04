@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik';
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+html {
+  scroll-behavior: smooth;
+  background-color: hsl(var(219), 48%, 8%);
+}
+.panel {
+  height: 100vh;
+  width: 100vw;
+}
