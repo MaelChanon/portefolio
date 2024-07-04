@@ -1,6 +1,7 @@
 import Presentation from './panels/Presentation'
 import { useEffect } from 'react'
 import ScrollController from './event/smoothScroll'
+import ProjectCarousel from './components/ProjectCarousel'
 function App() {
   let scrollController: ScrollController
   useEffect(() => {
@@ -14,7 +15,7 @@ function App() {
     <>
       <Presentation />
       <div className="panel" id="panel-2">
-        TEST2
+        <ProjectCarousel />
       </div>
       <div className="panel" id="panel-3">
         TEST3

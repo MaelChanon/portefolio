@@ -4,7 +4,7 @@ function App() {
     <>
       <div className="panel presentation">
         <div>
-          <p className="title">
+          <div className="title">
             <p className="slide-in-left">Bonjour 👋,</p>
             <p className="slide-in-left">
               Je m'appelle{' '}
@@ -13,7 +13,7 @@ function App() {
               </span>{' '}
             </p>
             <p className="slide-in-left">Je suis un Ingenieur logiciel </p>
-          </p>
+          </div>
         </div>
         <img className="profile" src="/profile.jpeg" alt="" />
       </div>
