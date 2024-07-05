@@ -1,6 +1,6 @@
 .hexagonal-icon {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -29,6 +29,7 @@
   position: absolute;
   margin: 4em 0;
   width: 100%;
+  display: none;
   height: 100%;
   opacity: 0.2;
   transform: rotate(-30deg) skewX(30deg);
@@ -51,4 +52,8 @@
   transform: skewX(-30deg) rotate(60deg) skewX(30deg);
   background: #db7b37;
   content: '';
+}
+
+.hexagonal-icon:hover .r-hex{
+  display: block;
 }

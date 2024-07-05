@@ -11,7 +11,7 @@ function ProjectCarousel() {
           {
             path: '/HTML.png',
             alt: 'HTML',
-            color: '#f0bd7c',
+            color: '#db7b37',
           },
         ]}
       />
