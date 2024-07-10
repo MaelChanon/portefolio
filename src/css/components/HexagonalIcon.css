@@ -1,10 +1,9 @@
 .hexagonal-icon {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   display: flex;
   justify-content: center;
   position: relative;
-  opacity: 1;
   align-items: center;
   aspect-ratio: cos(30deg);
 }
@@ -14,13 +13,10 @@
   height: 100%;
 }
 .hexagonal-icon img {
-  width: 50%;
-  height: 50%;
+  width: 55%;
+  height: 55%;
   object-fit: cover;
   z-index: 1;
-}
-* {
-  margin: 0;
 }
 
 .r-hex {
@@ -29,11 +25,11 @@
   position: absolute;
   margin: 4em 0;
   width: 100%;
-  display: none;
   height: 100%;
-  opacity: 0.2;
+  opacity: 0;
   transform: rotate(-30deg) skewX(30deg);
   border-radius: 15px;
+  transition: opacity 0.5s ease;
 }
 .r-hex *,
 .r-hex *:before {
@@ -42,18 +38,25 @@
   width: inherit;
   height: inherit;
   border-radius: inherit;
+  cursor: default;
 }
 .r-hex-inner {
   transform: skewX(-30deg) rotate(60deg) skewX(30deg);
   transition: opacity 0.75s;
-  cursor: pointer;
+  cursor: default;
 }
 .r-hex:first-child .r-hex-inner:before {
   transform: skewX(-30deg) rotate(60deg) skewX(30deg);
-  background: #db7b37;
+  background: var(--backgroundColor);
   content: '';
 }
 
-.hexagonal-icon:hover .r-hex{
-  display: block;
+.hexagonal-icon:hover .r-hex {
+  opacity: 0.2;
+}
+@media (max-width: 1100px) {
+  .hexagonal-icon {
+    width: 55px;
+    height: 55px;
+  }
 }

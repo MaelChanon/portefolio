@@ -6,7 +6,7 @@ type HexagonalIconProps = {
 const HexagonalIcon: React.FC<HexagonalIconProps> = (props) => {
   return (
     <div className="hexagonal-icon">
-      <div className="r-hex" >
+      <div className="r-hex" style={{ '--backgroundColor': props.icon.color } as React.CSSProperties}>
         <div className="r-hex-inner"></div>
       </div>
       <img src={props.icon.path} alt={props.icon.alt} />

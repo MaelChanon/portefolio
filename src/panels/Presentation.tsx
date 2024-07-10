@@ -2,7 +2,7 @@ import './../css/Presentation.css'
 function App() {
   return (
     <>
-      <div className="panel presentation">
+      <header className="presentation">
         <div>
           <div className="title">
             <p className="slide-in-left">Bonjour 👋,</p>
@@ -16,7 +16,7 @@ function App() {
           </div>
         </div>
         <img className="profile" src="/profile.jpeg" alt="" />
-      </div>
+      </header>
     </>
   )
 }
