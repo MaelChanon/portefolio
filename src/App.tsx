@@ -1,25 +1,12 @@
 import Presentation from './panels/Presentation'
-import { useEffect } from 'react'
-import ScrollController from './event/smoothScroll'
+
+import Projects from './panels/Projects'
 function App() {
-  let scrollController: ScrollController
-  useEffect(() => {
-    window.scroll(0, 0)
-    scrollController = new ScrollController(3)
-    return () => {
-      scrollController.destroy()
-    }
-  }, [])
   return (
-    <>
+    <div className="app">
       <Presentation />
-      <div className="panel" id="panel-2">
-        TEST2
-      </div>
-      <div className="panel" id="panel-3">
-        TEST3
-      </div>
-    </>
+      <Projects />
+    </div>
   )
 }
 
