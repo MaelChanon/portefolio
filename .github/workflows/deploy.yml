@@ -1,28 +1,48 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
     branches:
-      - main # Change this to your default branch if different
+      - main
 
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
+      - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          node-version: '20.10.0' # Change the Node version if necessary
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        uses: bahmutov/npm-install@v1
 
-      - name: Build the project
+      - name: Build project
         run: npm run build
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
