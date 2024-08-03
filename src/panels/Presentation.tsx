@@ -29,7 +29,7 @@ function App() {
             </button>
           </div>
         </div>
-        <img className="profile" src="/profile.jpeg" alt="" />
+        <img className="profile" src="./profile.jpeg" alt="" />
       </header>
     </>
   )
