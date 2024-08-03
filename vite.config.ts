@@ -5,4 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/portefolio/',
+  server: {
+    headers: {
+      'Permissions-Policy': 'interest-cohort=()', // Disallow interest-cohort
+    },
+  },
 })
