@@ -1,8 +1,8 @@
 {
-  "name": "Kingsman-App",
+  "name": "Mael Chanon",
   "version": "x.x.x.x",
-  "description": "App for Strasbourg University",
-  "repository": "git@git.unistra.fr:SFC/kingsman.git",
+  "description": "Mael portefolio",
+  "repository": "https://github.com/MaelChanon/portefolio",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' yarn run next",
     "build": "yarn run next build",
@@ -15,7 +15,7 @@
     "prepare": "cd ../ && husky install ./app/.husky"
   },
   "keywords": [],
-  "author": "Yannis BAYOURI & Guillaume SCHODER",
+  "author": "Maël Chanon",
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.9.1",
@@ -83,7 +83,6 @@
     "resize-observer": "1.0.4",
     "shortid": "2.2.16",
     "subscriptions-transport-ws": "0.11.0",
-    "three": "^0.169.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",
     "yup": "0.32.11"
   },
