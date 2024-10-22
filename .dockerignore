@@ -1,0 +1,7 @@
+.dockerignore
+.gitignore
+Dockerfile
+.env_dev
+.eslintrc.json
+.prettierrc.json
+README.md
