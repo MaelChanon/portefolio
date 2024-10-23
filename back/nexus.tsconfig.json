@@ -1,0 +1,29 @@
+{
+  /*
+    This file is used as a workaround for https://github.com/graphql-nexus/schema/issues/391
+    It allows the nexus schema generation to work (done via `npm run generate:nexus`).
+  */
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES2019",
+    "sourceMap": true,
+    "lib": [
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "alwaysStrict": true,
+  },
+  "exclude": [
+    "node_modules", "build"
+  ]
+}

@@ -4303,62 +4303,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kingsman-gql-server@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "kingsman-gql-server@workspace:."
-  dependencies:
-    "@prisma/client": "npm:3.14.0"
-    "@sentry/node": "npm:7.39.0"
-    "@types/global-agent": "npm:2.1.3"
-    "@types/graphql-iso-date": "npm:3.4.3"
-    "@types/pg": "npm:8.6.6"
-    "@types/ws": "npm:8.5.4"
-    apollo-server-caching: "npm:3.3.0"
-    apollo-server-core: "npm:3.11.1"
-    apollo-server-express: "npm:3.11.1"
-    aws-sdk: "npm:2.1325.0"
-    axios: "npm:^1.6.7"
-    cors: "npm:2.8.5"
-    cross-env: "npm:^7.0.3"
-    cross-var: "npm:^1.1.0"
-    csvtojson: "npm:^2.0.10"
-    cuid: "npm:2.1.8"
-    dataloader: "npm:2.2.2"
-    date-fns: "npm:^2.29.3"
-    diagnose-endpoint: "npm:1.1.0"
-    dotenv: "npm:^16.0.3"
-    dotenv-cli: "npm:^6.0.0"
-    env-cmd: "npm:^10.1.0"
-    express: "npm:4.18.2"
-    global-agent: "npm:3.0.0"
-    graphql: "npm:15.6.1"
-    graphql-iso-date: "npm:3.6.1"
-    graphql-middleware: "npm:^6.1.35"
-    graphql-postgres-subscriptions: "npm:1.0.5"
-    graphql-shield: "npm:^7.6.5"
-    graphql-upload: "npm:12.0.0"
-    graphql-ws: "npm:5.8.2"
-    iron-session: "npm:^6.3.1"
-    libreoffice-convert: "npm:1.6.0"
-    lodash: "npm:^4.17.21"
-    nexus: "npm:1.3.0"
-    nexus-plugin-prisma: "npm:0.35.0"
-    node-cron: "npm:^3.0.3"
-    nodemailer: "npm:^6.9.13"
-    nodemon: "npm:2.0.20"
-    pg: "npm:8.9.0"
-    prettier: "npm:2.8.4"
-    prisma: "npm:3.14.0"
-    rimraf: "npm:3.0.2"
-    sqlite3: "npm:5.1.7"
-    subscriptions-transport-ws: "npm:0.11.0"
-    ts-node: "npm:10.9.2"
-    ts-node-dev: "npm:1.1.8"
-    typescript: "npm:4.9.5"
-    ws: "npm:8.12.1"
-  languageName: unknown
-  linkType: soft
-
 "libreoffice-convert@npm:1.6.0":
   version: 1.6.0
   resolution: "libreoffice-convert@npm:1.6.0"
@@ -5275,6 +5219,62 @@ __metadata:
   checksum: 10c0/2044cfc34b2e8c88b73379ea4a36fc577db04f651c2909041b054c981cd863dd5373ebd030123ab058d194ae615d3a97cfdac653991e499d10caf592e8b3dc33
   languageName: node
   linkType: hard
+
+"portefolio-gql@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "portefolio-gql@workspace:."
+  dependencies:
+    "@prisma/client": "npm:3.14.0"
+    "@sentry/node": "npm:7.39.0"
+    "@types/global-agent": "npm:2.1.3"
+    "@types/graphql-iso-date": "npm:3.4.3"
+    "@types/pg": "npm:8.6.6"
+    "@types/ws": "npm:8.5.4"
+    apollo-server-caching: "npm:3.3.0"
+    apollo-server-core: "npm:3.11.1"
+    apollo-server-express: "npm:3.11.1"
+    aws-sdk: "npm:2.1325.0"
+    axios: "npm:^1.6.7"
+    cors: "npm:2.8.5"
+    cross-env: "npm:^7.0.3"
+    cross-var: "npm:^1.1.0"
+    csvtojson: "npm:^2.0.10"
+    cuid: "npm:2.1.8"
+    dataloader: "npm:2.2.2"
+    date-fns: "npm:^2.29.3"
+    diagnose-endpoint: "npm:1.1.0"
+    dotenv: "npm:^16.0.3"
+    dotenv-cli: "npm:^6.0.0"
+    env-cmd: "npm:^10.1.0"
+    express: "npm:4.18.2"
+    global-agent: "npm:3.0.0"
+    graphql: "npm:15.6.1"
+    graphql-iso-date: "npm:3.6.1"
+    graphql-middleware: "npm:^6.1.35"
+    graphql-postgres-subscriptions: "npm:1.0.5"
+    graphql-shield: "npm:^7.6.5"
+    graphql-upload: "npm:12.0.0"
+    graphql-ws: "npm:5.8.2"
+    iron-session: "npm:^6.3.1"
+    libreoffice-convert: "npm:1.6.0"
+    lodash: "npm:^4.17.21"
+    nexus: "npm:1.3.0"
+    nexus-plugin-prisma: "npm:0.35.0"
+    node-cron: "npm:^3.0.3"
+    nodemailer: "npm:^6.9.13"
+    nodemon: "npm:2.0.20"
+    pg: "npm:8.9.0"
+    prettier: "npm:2.8.4"
+    prisma: "npm:3.14.0"
+    rimraf: "npm:3.0.2"
+    sqlite3: "npm:5.1.7"
+    subscriptions-transport-ws: "npm:0.11.0"
+    ts-node: "npm:10.9.2"
+    ts-node-dev: "npm:1.1.8"
+    typescript: "npm:4.9.5"
+    ws: "npm:8.12.1"
+  languageName: unknown
+  linkType: soft
 
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.0.0

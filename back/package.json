@@ -1,8 +1,8 @@
 {
-  "name": "kingsman-gql-server",
+  "name": "portefolio-gql",
   "version": "1.0.94",
   "description": "Gql server for Strasbourg University",
-  "repository": "git@git.unistra.fr:SFC/kingsman.git",
+  "repository": "https://github.com/MaelChanon/portefolio",
   "scripts": {
     "dev": "mkdir temp | true && ts-node-dev --respawn --transpile-only index.ts",
     "build": "rimraf build && tsc",

@@ -1,3 +1,6 @@
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
@@ -6,57 +9,61 @@ datasource db {
 
 //**************************OWNER*************************
 model Owner {
-  id Int @id @default(autoincrement())
-  firstname String
-  lastName String
-  role String
-  photo String
+  id           Int    @id @default(autoincrement())
+  firstname    String
+  lastName     String
+  role         String
+  photo        String
   linkedinLink String
-  githubLink String
-  
-  projects Project[] @relation(name: "projects")
+  githubLink   String
+
+  projects    Project[]    @relation(name: "projects")
   experiences Experience[] @relation(name: "experiences")
 }
+
 //**************************PROJECT***********************
 model Project {
-  id Int @id @default(autoincrement())
-  name String
+  id          Int    @id @default(autoincrement())
+  name        String
   description String
-  githubLink String
-  videoLink String
+  githubLink  String
+  videoLink   String
 
   ownerId Int
-  owner Owner @relation(fields: [ownerId], name: "projects", references: [id])
-  logos ProjectLogo[]
+  owner   Owner         @relation(fields: [ownerId], name: "projects", references: [id])
+  logos   ProjectLogo[]
 }
+
 //**************************LOGO**************************
 model Logo {
-  id Int @id @default(autoincrement())
-  photo String
-  color String
-  link String
+  id       Int           @id @default(autoincrement())
+  photo    String
+  color    String
+  link     String
+  alt      String
   projects ProjectLogo[]
 }
+
 //**************************PROJECTLOGO*******************
 model ProjectLogo {
-  logoId Int
+  logoId    Int
   projectId Int
-  logo Logo @relation(fields: [logoId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
+  logo      Logo    @relation(fields: [logoId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+
   @@id([logoId, projectId])
 }
+
 //**************************EXPERIENCES*******************
 model Experience {
-  id Int @id @default(autoincrement())
-  startDate DateTime
-  endDate DateTime
-  logo String
-  compagny String
-  title String
+  id          Int      @id @default(autoincrement())
+  startDate   DateTime
+  endDate     DateTime
+  logo        String
+  compagny    String
+  title       String
   description String
 
   ownerId Int
-  owner Owner @relation(fields: [ownerId], name: "experiences", references: [id])
+  owner   Owner @relation(fields: [ownerId], name: "experiences", references: [id])
 }
-
-

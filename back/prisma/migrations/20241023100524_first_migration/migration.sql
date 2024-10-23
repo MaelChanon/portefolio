@@ -29,6 +29,7 @@ CREATE TABLE "Logo" (
     "photo" TEXT NOT NULL,
     "color" TEXT NOT NULL,
     "link" TEXT NOT NULL,
+    "alt" TEXT NOT NULL,
 
     CONSTRAINT "Logo_pkey" PRIMARY KEY ("id")
 );
