@@ -2005,9 +2005,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"Kingsman-App@workspace:.":
+"Mael Chanon@workspace:.":
   version: 0.0.0-use.local
-  resolution: "Kingsman-App@workspace:."
+  resolution: "Mael Chanon@workspace:."
   dependencies:
     "@apollo/client": "npm:^3.9.1"
     "@date-io/date-fns": "npm:1.3.13"
@@ -2094,7 +2094,6 @@ __metadata:
     shortid: "npm:2.2.16"
     stylelint: "npm:14.8.2"
     subscriptions-transport-ws: "npm:0.11.0"
-    three: "npm:^0.169.0"
     ts-node: "npm:10.9.2"
     typescript: "npm:5.2.2"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
@@ -8574,13 +8573,6 @@ __metadata:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: 10c0/02805740c12851ea5982686810702e2f14369a5f4c5c40a836821e3eefc65ffeec3131ba324692a37608294b0fd8c1e55a2dd571ffed4909822787668ddbee5c
-  languageName: node
-  linkType: hard
-
-"three@npm:^0.169.0":
-  version: 0.169.0
-  resolution: "three@npm:0.169.0"
-  checksum: 10c0/be2e20f45eaa50489cd22d366c41fa14528f00b873078f52fc6ef37140fa8e541e9805630bbe696ab9b027530c74e5cd341705266eb268b5219402fb9fa78ed4
   languageName: node
   linkType: hard
 
