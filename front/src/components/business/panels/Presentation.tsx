@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: '101vh',
     width: '100%',
     justifyContent: 'space-around',
     [theme.breakpoints.down('md')]: {

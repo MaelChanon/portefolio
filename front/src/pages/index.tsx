@@ -7,16 +7,21 @@ import { useQuery, gql } from '@apollo/client';
 import { GET_OWNER } from '@graphql';
 import Loader from '@compenents/ui/progress/loader';
 import { Owner } from '@types';
-interface Type {
-  user: string;
-}
+
 const useStyles = makeStyles(() => ({
   container: {
     maxWidth: '1080px',
   },
+  presentationContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '101vh',
+    alignItems: 'center',
+    width: '100%',
+  },
 }));
 
-const Index: NextPage<Type> = () => {
+const Index: NextPage = () => {
   const classes = useStyles();
   const { loading, error, data } = useQuery<{
     owner: Owner;
@@ -31,7 +36,10 @@ const Index: NextPage<Type> = () => {
   if (!data) return <p>Error in data fetching</p>;
   return (
     <div className={classes.container}>
-      <Presentation owner={data.owner} />
+      <div className={classes.presentationContainer}>
+        <Presentation owner={data.owner} />
+      </div>
+
       {data.owner.projects && <Projects projects={data.owner.projects} />}
       {data.owner.experiences && <Timeline experiences={data.owner.experiences} />}
     </div>
