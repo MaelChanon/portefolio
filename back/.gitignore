@@ -1,0 +1,31 @@
+
+# yarn zero installs
+node_modules
+.yarn/*
+.yarn/cache
+!.yarn/releases
+#yarn.lock
+
+.env
+.env_test
+.env_dev
+
+#schema/generated
+#index.js
+build
+
+fileUploads/instdir/*
+temp
+temp/*
+temp/modelEdition.db
+#types/generated/*
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+package-lock.json
+
+.pnp.cjs
+.pnp.loader.mjs

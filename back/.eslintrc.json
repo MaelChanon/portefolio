@@ -1,0 +1,156 @@
+{
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "plugins": ["@typescript-eslint", "react-hooks", "import", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true
+    }
+  },
+  "rules": {
+    "import/no-unresolved": ["error", { "ignore": ["^@"] }],
+    "react/jsx-props-no-spreading": ["off"],
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/href-no-hash": ["off"],
+    "no-underscore-dangle": ["off"],
+    "react/prop-types": ["off"],
+    "no-console": "off",
+    "prettier/prettier": "off",
+    "import/no-unresolved": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/first": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "import/extensions": "off",
+    "spaced-comment": "off",
+    "react/no-unescaped-entities": "off",
+    "eqeqeq": "off",
+    "import/no-mutable-exports": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-shadow": "off",
+    "vars-on-top": "off",
+    "block-scoped-var": "off",
+    "no-extra-bind": "off",
+    "no-return-assign": "off",
+    "no-var": "off",
+    "prefer-template": "off",
+    "no-else-return": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "import/order": "off",
+    "radix": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/ban-types": "off",
+    "react/destructuring-assignment": "off",
+    "no-empty-pattern": "off",
+    "no-unneeded-ternary": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "prefer-const": "off",
+    "react/self-closing-comp": "off",
+    "import/newline-after-import": "off",
+    "no-useless-rename": "off",
+    "import/prefer-default-export": "off",
+    "camelcase": "off",
+    "object-shorthand": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-extra-semi": "off",
+    "react/no-array-index-key": "off",
+    "react/forbid-prop-types": "off",
+    "no-param-reassign": "off",
+    "global-require": "off",
+    "one-var": "off",
+    "no-useless-computed-key": "off",
+    "no-plusplus": "off",
+    "no-cond-assign": "off",
+    "no-nested-ternary": "off",
+    "no-useless-escape": "off",
+    "react/no-unused-prop-types": "off",
+    "no-restricted-syntax": "off",
+    "no-restricted-globals": "off",
+    "prefer-destructuring": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-extra-boolean-cast": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-unused-expressions": "off",
+    "lines-between-class-members": "off",
+    "prefer-rest-params": "off",
+    "react/sort-comp": "off",
+    "class-methods-use-this": "off",
+    "lines-between-class-members": "off",
+    "strict": "off",
+    "lines-around-directive": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "no-use-before-define": "off",
+    "default-case": "off",
+    "no-empty": "off",
+    "no-self-assign": "off",
+    "no-await-in-loop": "off",
+    "react/button-has-type": "off",
+    "guard-for-in": "off",
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ],
+    "react/jsx-filename-extension": [
+      "warn",
+      { "extensions": [".js", ".jsx", ".tsx"] }
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 80,
+        "tabWidth": 2,
+        "comments": 120,
+        "ignoreComments": false,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
+  },
+  "ignorePatterns": ["components/svg/", "components/illustration/"],
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["@buttons", "./components/buttons"],
+        ["@display", "./components/display"],
+        ["@inputs", "./components/inputs"],
+        ["@forms", "./components/forms"],
+        ["@progress", "./components/progress"],
+        ["@menus", "./components/menus"],
+        ["@tables", "./components/tables"],
+        ["@components", "./components"],
+        ["@graphql", "./graphql"],
+        ["@icons", "./icons"],
+        ["@contexts", "./contexts"],
+        ["@layouts", "./components/layouts"],
+        ["@lib", "./lib"],
+        ["@styles", "./styles"],
+        ["@root", "./"]
+      ]
+    }
+  }
+}
