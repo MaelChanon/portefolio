@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       height: '100%',
     },
+    '&:active': {
+      boxShadow: 'inset 2px 2px 4px #121010, -2px -2px 4px #242424',
+    },
   },
 }));
 

@@ -13,16 +13,21 @@ export const Project = objectType({
       type: 'Owner',
       resolve: (parent, _, ctx) => {
         return ctx.prisma.project
-          .findUnique({ where: { id: parent.id } })
+          .findUnique({
+            where: { id: parent.id },
+          })
           .owner()
       },
     })
     t.nonNull.list.nonNull.field('logos', {
-      type: 'ProjectLogo',
-      resolve: (parent, _, ctx) => {
-        return ctx.prisma.project
+      type: 'Logo',
+      resolve: async (parent, _, ctx) => {
+        const projectLogos = await ctx.prisma.project
           .findUnique({ where: { id: parent.id } })
-          .logos()
+          .logos({
+            include: { logo: true },
+          })
+        return projectLogos.map((pl) => pl.logo)
       },
     })
   },

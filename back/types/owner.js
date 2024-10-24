@@ -1,4 +1,5 @@
-import { objectType } from 'nexus'
+import { orderBy } from 'lodash'
+import { objectType, stringArg } from 'nexus'
 
 export const Owner = objectType({
   name: 'Owner',
@@ -12,7 +13,7 @@ export const Owner = objectType({
     t.nonNull.string('githubLink')
     t.nonNull.list.nonNull.field('projects', {
       type: 'Project',
-      resolve: (parent, _, ctx) => {
+      resolve: async (parent, _, ctx) => {
         return ctx.prisma.owner
           .findUnique({ where: { id: parent.id } })
           .projects()
@@ -22,8 +23,14 @@ export const Owner = objectType({
       type: 'Experience',
       resolve: (parent, _, ctx) => {
         return ctx.prisma.owner
-          .findUnique({ where: { id: parent.id } })
-          .experiences()
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .experiences({
+            orderBy: {
+              startDate: 'desc',
+            },
+          })
       },
     })
   },

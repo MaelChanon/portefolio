@@ -22,7 +22,10 @@
       "@*": ["./src/*"],
       "@lib/*": ["./src/lib/*"],
       "@types": ["./src/lib/types"],
-      "@compenents/*": ["./src/components/*"]
+      "@compenents/*": ["./src/components/*"],
+      "@graphql": ["./src/gql/index"],
+      "@root/*": ["./*"]
+
     }
   },
   "exclude": ["node_modules"],

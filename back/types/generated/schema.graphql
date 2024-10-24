@@ -25,7 +25,7 @@ type Logo {
   id: Int!
   link: String!
   photo: String!
-  projects: [ProjectLogo!]!
+  projects: [Project!]!
 }
 
 type Owner {
@@ -44,18 +44,11 @@ type Project {
   description: String!
   githubLink: String!
   id: Int!
-  logos: [ProjectLogo!]!
+  logos: [Logo!]!
   name: String!
   owner: Owner!
   ownerId: Int!
   videoLink: String!
-}
-
-type ProjectLogo {
-  logo: Logo!
-  logoId: Int!
-  project: Project!
-  projectId: Int!
 }
 
 type Query {

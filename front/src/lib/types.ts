@@ -1,28 +1,55 @@
-export type Icon = {
-    path: string
-    alt: string
-    color: string
-    link: string
+export interface logo {
+  hover_color?: string;
+}
+
+// Type pour le logo des projets
+export interface Logo {
+  photo: string;
+  color: string;
+  link: string;
+  alt: string;
+}
+
+// Type pour les projets
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  githubLink: string;
+  videoLink: string;
+  logos: Logo[];
+}
+
+// Type pour les expériences professionnelles
+export interface Experience {
+  id: string;
+  startDate: string;
+  endDate: string;
+  logo: string;
+  company: string;
+  title: string;
+  description: string;
+}
+
+// Type pour le propriétaire (Owner)
+export interface Owner {
+  id: string;
+  firstname: string;
+  lastName: string;
+  role: string;
+  photo: string;
+  linkedinLink?: string;
+  githubLink: string;
+  projects?: Project[];
+  experiences?: Experience[];
+}
+
+declare module '@material-ui/core/styles' {
+  interface Theme {
+    customPalette: {
+      lightGrey: string;
+      lightGreen: string;
+      darkGrey: string;
+    };
   }
-  export type ProjectItem = {
-    video_path: string
-    project_title: string
-    project_description: string
-    project_link: string
-    technologies?: Array<Icon>
-    left_description: boolean
-    slide_in_left: boolean
-  }
-  
-  export type logo = {
-    hover_color?: string
-  }
-  declare module '@material-ui/core/styles' {
-    interface Theme {
-      customPalette: {
-        lightGrey: string;
-        lightGreen: string;
-        darkGrey: string;
-      };
-    }
-  }
+}

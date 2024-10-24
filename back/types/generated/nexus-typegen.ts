@@ -77,10 +77,6 @@ export interface NexusGenObjects {
     ownerId: number; // Int!
     videoLink: string; // String!
   }
-  ProjectLogo: { // root type
-    logoId: number; // Int!
-    projectId: number; // Int!
-  }
   Query: {};
 }
 
@@ -112,7 +108,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     link: string; // String!
     photo: string; // String!
-    projects: NexusGenRootTypes['ProjectLogo'][]; // [ProjectLogo!]!
+    projects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   Owner: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -129,17 +125,11 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     githubLink: string; // String!
     id: number; // Int!
-    logos: NexusGenRootTypes['ProjectLogo'][]; // [ProjectLogo!]!
+    logos: NexusGenRootTypes['Logo'][]; // [Logo!]!
     name: string; // String!
     owner: NexusGenRootTypes['Owner']; // Owner!
     ownerId: number; // Int!
     videoLink: string; // String!
-  }
-  ProjectLogo: { // field return type
-    logo: NexusGenRootTypes['Logo']; // Logo!
-    logoId: number; // Int!
-    project: NexusGenRootTypes['Project']; // Project!
-    projectId: number; // Int!
   }
   Query: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -167,7 +157,7 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     link: 'String'
     photo: 'String'
-    projects: 'ProjectLogo'
+    projects: 'Project'
   }
   Owner: { // field return type name
     experiences: 'Experience'
@@ -184,17 +174,11 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     githubLink: 'String'
     id: 'Int'
-    logos: 'ProjectLogo'
+    logos: 'Logo'
     name: 'String'
     owner: 'Owner'
     ownerId: 'Int'
     videoLink: 'String'
-  }
-  ProjectLogo: { // field return type name
-    logo: 'Logo'
-    logoId: 'Int'
-    project: 'Project'
-    projectId: 'Int'
   }
   Query: { // field return type name
     experiences: 'Experience'

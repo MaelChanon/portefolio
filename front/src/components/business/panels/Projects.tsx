@@ -1,5 +1,6 @@
 import ProjectItem from '@compenents/business/card/ProjectItem';
 import projects from '@lib/data';
+import { Project } from '@lib/types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,14 +15,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '5rem',
   },
 }));
-
-function ProjectCarousel() {
+interface projectType {
+  projects: Project[];
+}
+function ProjectCarousel({ projects }: projectType) {
   const classes = useStyles();
+  let slide_in_left = false;
   return (
     <div className={classes.projectWrapper}>
-      {projects.map((project) => (
-        <ProjectItem {...project} key={project.project_title} />
-      ))}
+      {projects.map((project) => {
+        slide_in_left = !slide_in_left;
+        return <ProjectItem project={project} slide_in_left={slide_in_left} key={project.name} />;
+      })}
     </div>
   );
 }

@@ -1,10 +1,10 @@
-import { ProjectItem as ProjectItemProp } from '@types';
 import HexagonalIcon from '@compenents/ui/icon/HexagonalIcon';
 import { ReactElement, useEffect, useRef } from 'react';
 import Github from '@compenents/ui/logo/Github';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import theme from '@lib/theme';
+import { Project } from '@lib/types';
 const useStyles = makeStyles((theme) => ({
   projectItem: {
     maxWidth: '90vw',
@@ -115,9 +115,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProjectItem(props: ProjectItemProp): ReactElement {
+interface ProjectType {
+  project: Project;
+  slide_in_left: boolean;
+}
+function ProjectItem({ project, slide_in_left }: ProjectType): ReactElement {
   const classes = useStyles();
-  const className = props.slide_in_left ? 'slideLeft' : 'slideRight';
+  const className = slide_in_left ? 'slideLeft' : 'slideRight';
   const boxRef = useRef(null);
   useEffect(() => {
     const observerOptions = {
@@ -150,32 +154,32 @@ function ProjectItem(props: ProjectItemProp): ReactElement {
       className={`${classes.projectItem} ${className}`}
       ref={boxRef}
       style={{
-        flexDirection: props.left_description ? 'row' : 'row-reverse',
+        flexDirection: slide_in_left ? 'row' : 'row-reverse',
       }}
     >
       <div className={classes.projectInfo}>
         <div>
           <Typography variant="h3" component="h3" className={classes.projectTitle}>
-            {props.project_title}
+            {project.name}
           </Typography>
           <div>
-            <Typography variant="body1">{props.project_description}</Typography>
+            <Typography variant="body1">{project.description}</Typography>
           </div>
-          {props.technologies && (
+          {project.logos && (
             <div className={classes.projectTechnologie}>
-              {props.technologies.map((icon) => (
-                <HexagonalIcon key={icon.path} icon={icon} />
+              {project.logos.map((icon) => (
+                <HexagonalIcon key={icon.link} logo={icon} />
               ))}
             </div>
           )}
         </div>
         <div
           className={`${classes.githubContainer} ${
-            props.left_description ? classes.githubLeft : classes.githubRight
+            slide_in_left ? classes.githubLeft : classes.githubRight
           } `}
         >
-          <a href={props.project_link} target="_blank" className={classes.projectLink}>
-            <Github hover_color={theme.customPalette.lightGreen} className={classes.github} />
+          <a href={project.githubLink} target="_blank" className={classes.projectLink}>
+            <Github hover_color={theme.customPalette.lightGreen} />
           </a>
         </div>
       </div>
@@ -188,7 +192,7 @@ function ProjectItem(props: ProjectItemProp): ReactElement {
           playsInline // Prevent fullscreen on mobile devices
           preload="metadata"
         >
-          <source src={props.video_path} type="video/mp4" />
+          <source src={project.videoLink} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>

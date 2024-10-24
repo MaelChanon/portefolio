@@ -6,9 +6,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import '../styles/index.scss';
 import 'quill/dist/quill.snow.css';
 import theme from '@lib/theme';
-
+import { initializeApollo } from '@lib/apolloClient';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { ApolloProvider } from '@apollo/client';
 
 require('events').EventEmitter.defaultMaxListeners = 10;
 
@@ -16,7 +17,7 @@ config.autoAddCss = false;
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
-
+  const client = initializeApollo();
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -34,7 +35,9 @@ export default function MyApp(props: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
       </ThemeProvider>
     </>
   );

@@ -1,9 +1,6 @@
-import { Icon } from '@types';
+import { Logo } from '@types';
 import { ReactElement } from 'react';
 import Image from 'next/image';
-type HexagonalIconProps = {
-  icon: Icon;
-};
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -72,18 +69,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-function HexagonalIcon({ icon }: HexagonalIconProps): ReactElement {
+interface HexagonalIconType {
+  logo: Logo;
+}
+function HexagonalIcon({ logo }: HexagonalIconType): ReactElement {
   const classes = useStyles();
   return (
-    <a href={icon.link || ''} target="_blank" className={classes.hexagonalIcon}>
+    <a href={logo.link || ''} target="_blank" className={classes.hexagonalIcon}>
       <div
         className={classes.rHex}
-        style={{ '--backgroundColor': icon.color } as React.CSSProperties}
+        style={{ '--backgroundColor': logo.color } as React.CSSProperties}
       >
         <div className={classes.rHexInner}></div>
       </div>
-      <Image src={icon.path} alt={icon.alt} width={75} height={75} />
+      <Image src={logo.photo} alt={logo.alt} width={75} height={75} />
     </a>
   );
 }

@@ -4,6 +4,7 @@ import { makeStyles, Typography } from '@material-ui/core';
 import Image from 'next/image';
 import next from 'next';
 import SquaredRoundedButton from '@components/ui/button/squaredRoundedButton';
+import { Owner } from '@lib/types';
 const useStyles = makeStyles((theme) => ({
   '@keyframes blink': {
     '0%': {
@@ -64,9 +65,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '5px',
     animation: '$slideinBottom 1.5s forwards',
     animationDelay: '0.6s',
-    '&:active': {
-      boxShadow: 'inset 2px 2px 4px #121010, -2px -2px 4px #242424',
-    },
+
     '& a': {
       lineHeight: 0,
       width: '100%',
@@ -139,8 +138,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-function Presentation() {
+interface PresentationType {
+  owner: Owner;
+}
+function Presentation({ owner }: PresentationType) {
   const classes = useStyles();
   return (
     <>
@@ -154,30 +155,32 @@ function Presentation() {
               Je m'appelle{' '}
               <Typography variant="body2" component="span" className={classes.highlight}>
                 <Typography variant="body2" component="span">
-                  Maël Chanon
+                  {`${owner.firstname} ${owner.lastName}`}
                 </Typography>
               </Typography>{' '}
             </Typography>
 
             <Typography variant="body2" className={classes['@keyframes slideinLeft']}>
-              Je suis un Ingenieur logiciel
+              Je suis {owner.role}
             </Typography>
           </div>
           <div className={classes.contact}>
-            <SquaredRoundedButton>
-              <a href="https://www.linkedin.com/in/chanon-mael/" target="_blank">
-                <LinkedIn hover_color="#0e76a8" />
-              </a>
-            </SquaredRoundedButton>
+            {owner.linkedinLink && (
+              <SquaredRoundedButton>
+                <a href={owner.linkedinLink} target="_blank">
+                  <LinkedIn hover_color="#0e76a8" />
+                </a>
+              </SquaredRoundedButton>
+            )}
 
             <SquaredRoundedButton>
-              <a href="https://github.com/MaelChanon" target="_blank">
+              <a href={owner.githubLink} target="_blank">
                 <Github hover_color="#b663e9" />
               </a>
             </SquaredRoundedButton>
           </div>
         </div>
-        <Image className={classes.profile} width={190} height={190} src="/profile.jpeg" alt="" />
+        <Image className={classes.profile} width={190} height={190} src={owner.photo} alt="" />
       </header>
     </>
   );

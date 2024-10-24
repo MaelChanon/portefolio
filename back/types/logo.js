@@ -9,11 +9,11 @@ export const Logo = objectType({
     t.nonNull.string('link')
     t.nonNull.string('alt')
     t.nonNull.list.nonNull.field('projects', {
-      type: 'ProjectLogo',
+      type: 'Project',
       resolve: (parent, _, ctx) => {
-        return ctx.prisma.logo
-          .findUnique({ where: { id: parent.id } })
-          .projects()
+        return ctx.prisma.projectLogo.findMany({
+          where: { logoId: parent.id },
+        })
       },
     })
   },
