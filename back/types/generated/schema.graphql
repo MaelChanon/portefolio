@@ -12,7 +12,7 @@ type Experience {
   description: String!
   endDate: DateTime!
   id: Int!
-  logo: String!
+  logo: mediaField!
   owner: Owner!
   ownerId: Int!
   startDate: DateTime!
@@ -24,7 +24,7 @@ type Logo {
   color: String!
   id: Int!
   link: String!
-  photo: String!
+  photo: mediaField!
   projects: [Project!]!
 }
 
@@ -35,7 +35,7 @@ type Owner {
   id: Int!
   lastName: String!
   linkedinLink: String!
-  photo: String!
+  photo: mediaField!
   projects: [Project!]!
   role: String!
 }
@@ -48,7 +48,7 @@ type Project {
   name: String!
   owner: Owner!
   ownerId: Int!
-  videoLink: String!
+  videoLink: mediaField!
 }
 
 type Query {
@@ -57,3 +57,6 @@ type Query {
   owner(id: Int!): Owner
   projects: [Project!]!
 }
+
+"""media fied"""
+scalar mediaField

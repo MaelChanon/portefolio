@@ -15,11 +15,11 @@ const nextConfig = {
     domains: ['localhost'],
   },
   serverRuntimeConfig: {
-    graphqlUrl: process.env.GQL_URL || 'http://localhost:4000/graphql',
+    graphqlUrl: process.env.GQL_URL || 'http://localhost:4000/graphql/graphql',
   },
   // Optionnel : si vous voulez aussi accéder à l'URL côté client
   publicRuntimeConfig: {
-    graphqlUrl: process.env.GQL_URL || 'http://localhost:4000/graphql',
+    graphqlUrl: process.env.GQL_URL || 'http://localhost:4000/graphql/graphql',
   },
   // Autres configurations Next.js si nécessaire
 };

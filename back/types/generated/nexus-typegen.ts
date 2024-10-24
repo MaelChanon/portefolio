@@ -8,6 +8,10 @@ import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
+     * media fied
+     */
+    media<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "mediaField";
+    /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
     dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
@@ -15,6 +19,10 @@ declare global {
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * media fied
+     */
+    media<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "mediaField";
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
@@ -40,6 +48,7 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   DateTime: any
+  mediaField: any
 }
 
 export interface NexusGenObjects {
@@ -48,7 +57,7 @@ export interface NexusGenObjects {
     description: string; // String!
     endDate: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    logo: string; // String!
+    logo: NexusGenScalars['mediaField']; // mediaField!
     ownerId: number; // Int!
     startDate: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
@@ -58,7 +67,7 @@ export interface NexusGenObjects {
     color: string; // String!
     id: number; // Int!
     link: string; // String!
-    photo: string; // String!
+    photo: NexusGenScalars['mediaField']; // mediaField!
   }
   Owner: { // root type
     firstname: string; // String!
@@ -66,7 +75,7 @@ export interface NexusGenObjects {
     id: number; // Int!
     lastName: string; // String!
     linkedinLink: string; // String!
-    photo: string; // String!
+    photo: NexusGenScalars['mediaField']; // mediaField!
     role: string; // String!
   }
   Project: { // root type
@@ -75,7 +84,7 @@ export interface NexusGenObjects {
     id: number; // Int!
     name: string; // String!
     ownerId: number; // Int!
-    videoLink: string; // String!
+    videoLink: NexusGenScalars['mediaField']; // mediaField!
   }
   Query: {};
 }
@@ -96,7 +105,7 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     endDate: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    logo: string; // String!
+    logo: NexusGenScalars['mediaField']; // mediaField!
     owner: NexusGenRootTypes['Owner']; // Owner!
     ownerId: number; // Int!
     startDate: NexusGenScalars['DateTime']; // DateTime!
@@ -107,7 +116,7 @@ export interface NexusGenFieldTypes {
     color: string; // String!
     id: number; // Int!
     link: string; // String!
-    photo: string; // String!
+    photo: NexusGenScalars['mediaField']; // mediaField!
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   Owner: { // field return type
@@ -117,7 +126,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     lastName: string; // String!
     linkedinLink: string; // String!
-    photo: string; // String!
+    photo: NexusGenScalars['mediaField']; // mediaField!
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
     role: string; // String!
   }
@@ -129,7 +138,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     owner: NexusGenRootTypes['Owner']; // Owner!
     ownerId: number; // Int!
-    videoLink: string; // String!
+    videoLink: NexusGenScalars['mediaField']; // mediaField!
   }
   Query: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -145,7 +154,7 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     endDate: 'DateTime'
     id: 'Int'
-    logo: 'String'
+    logo: 'mediaField'
     owner: 'Owner'
     ownerId: 'Int'
     startDate: 'DateTime'
@@ -156,7 +165,7 @@ export interface NexusGenFieldTypeNames {
     color: 'String'
     id: 'Int'
     link: 'String'
-    photo: 'String'
+    photo: 'mediaField'
     projects: 'Project'
   }
   Owner: { // field return type name
@@ -166,7 +175,7 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     lastName: 'String'
     linkedinLink: 'String'
-    photo: 'String'
+    photo: 'mediaField'
     projects: 'Project'
     role: 'String'
   }
@@ -178,7 +187,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     owner: 'Owner'
     ownerId: 'Int'
-    videoLink: 'String'
+    videoLink: 'mediaField'
   }
   Query: { // field return type name
     experiences: 'Experience'

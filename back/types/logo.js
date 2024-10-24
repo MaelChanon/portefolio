@@ -4,7 +4,7 @@ export const Logo = objectType({
   name: 'Logo',
   definition(t) {
     t.nonNull.int('id')
-    t.nonNull.string('photo')
+    t.nonNull.media('photo')
     t.nonNull.string('color')
     t.nonNull.string('link')
     t.nonNull.string('alt')

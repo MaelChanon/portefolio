@@ -5,6 +5,8 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import { schema } from './schema'
 import { Context } from './types'
 import prisma from './lib/prisma'
+import path from 'path'
+import { staticServe } from './service/static'
 async function context(request: any): Promise<Context> {
   return {
     ...request,
@@ -14,12 +16,15 @@ async function context(request: any): Promise<Context> {
 }
 
 ;(async () => {
-  const PORT = 4000
+  const PORT = process.env.PORT || 4000
   const app = express()
   const httpServer = createServer(app)
   //faire le bail du middleware
   const isOnline = false
-
+  const staticFolder = 'public'
+  const publicPath = path.join(__dirname, staticFolder)
+  console.log(publicPath)
+  staticServe(app)
   const server = new ApolloServer({
     schema,
     context,
@@ -30,7 +35,7 @@ async function context(request: any): Promise<Context> {
   server.applyMiddleware({
     app,
     cors: true,
-    path: '/',
+    path: '/graphql',
     bodyParserConfig: {
       limit: '300mb',
     },

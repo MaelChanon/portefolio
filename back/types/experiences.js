@@ -6,7 +6,7 @@ export const Experience = objectType({
     t.nonNull.int('id')
     t.nonNull.field('startDate', { type: 'DateTime' })
     t.nonNull.field('endDate', { type: 'DateTime' })
-    t.nonNull.string('logo')
+    t.nonNull.media('logo')
     t.nonNull.string('compagny')
     t.nonNull.string('title')
     t.nonNull.string('description')

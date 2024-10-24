@@ -8,7 +8,7 @@ export const Owner = objectType({
     t.nonNull.string('firstname')
     t.nonNull.string('lastName')
     t.nonNull.string('role')
-    t.nonNull.string('photo')
+    t.nonNull.media('photo')
     t.nonNull.string('linkedinLink')
     t.nonNull.string('githubLink')
     t.nonNull.list.nonNull.field('projects', {
