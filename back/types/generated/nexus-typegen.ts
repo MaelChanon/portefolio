@@ -29,13 +29,32 @@ declare global {
     dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
   }
 }
-
+declare global {
+  interface NexusGenCustomOutputProperties<TypeName extends string> {
+    crud: NexusPrisma<TypeName, 'crud'>
+    model: NexusPrisma<TypeName, 'model'>
+  }
+}
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
+  ImageInput: { // input type
+    base64?: string | null; // String
+    name?: string | null; // String
+    type?: string | null; // String
+  }
+  UpdateOwnerInput: { // input type
+    base64?: string | null; // String
+    firstname?: string | null; // String
+    githubLink?: string | null; // String
+    lastname?: string | null; // String
+    linkedinLink?: string | null; // String
+    photo?: NexusGenInputs['ImageInput'] | null; // ImageInput
+    role?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -69,11 +88,12 @@ export interface NexusGenObjects {
     link: string; // String!
     photo: NexusGenScalars['mediaField']; // mediaField!
   }
+  Mutation: {};
   Owner: { // root type
     firstname: string; // String!
     githubLink: string; // String!
     id: number; // Int!
-    lastName: string; // String!
+    lastname: string; // String!
     linkedinLink: string; // String!
     photo: NexusGenScalars['mediaField']; // mediaField!
     role: string; // String!
@@ -119,12 +139,15 @@ export interface NexusGenFieldTypes {
     photo: NexusGenScalars['mediaField']; // mediaField!
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
+  Mutation: { // field return type
+    updateOwner: NexusGenRootTypes['Owner'] | null; // Owner
+  }
   Owner: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     firstname: string; // String!
     githubLink: string; // String!
     id: number; // Int!
-    lastName: string; // String!
+    lastname: string; // String!
     linkedinLink: string; // String!
     photo: NexusGenScalars['mediaField']; // mediaField!
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
@@ -168,12 +191,15 @@ export interface NexusGenFieldTypeNames {
     photo: 'mediaField'
     projects: 'Project'
   }
+  Mutation: { // field return type name
+    updateOwner: 'Owner'
+  }
   Owner: { // field return type name
     experiences: 'Experience'
     firstname: 'String'
     githubLink: 'String'
     id: 'Int'
-    lastName: 'String'
+    lastname: 'String'
     linkedinLink: 'String'
     photo: 'mediaField'
     projects: 'Project'
@@ -198,6 +224,12 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    updateOwner: { // args
+      data?: NexusGenInputs['UpdateOwnerInput'] | null; // UpdateOwnerInput
+      id: number; // Int!
+    }
+  }
   Query: {
     owner: { // args
       id: number; // Int!
@@ -213,7 +245,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

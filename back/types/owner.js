@@ -6,7 +6,7 @@ export const Owner = objectType({
   definition(t) {
     t.nonNull.int('id')
     t.nonNull.string('firstname')
-    t.nonNull.string('lastName')
+    t.nonNull.string('lastname')
     t.nonNull.string('role')
     t.nonNull.media('photo')
     t.nonNull.string('linkedinLink')

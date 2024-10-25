@@ -10,6 +10,7 @@ import { initializeApollo } from '@lib/apolloClient';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { ApolloProvider } from '@apollo/client';
+import { OwnerProvider } from '@providers/ownerProvider';
 
 require('events').EventEmitter.defaultMaxListeners = 10;
 
@@ -36,7 +37,9 @@ export default function MyApp(props: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ApolloProvider client={client}>
-          <Component {...pageProps} />
+          <OwnerProvider>
+            <Component {...pageProps} />
+          </OwnerProvider>
         </ApolloProvider>
       </ThemeProvider>
     </>

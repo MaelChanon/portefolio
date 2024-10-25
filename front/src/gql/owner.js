@@ -4,7 +4,7 @@ export const Owner = {
     fragment OwnerFields on Owner {
       id
       firstname
-      lastName
+      lastname
       role
       photo
       linkedinLink
@@ -44,3 +44,22 @@ export const GET_OWNER = gql`
   }
   ${Owner.details}
 `;
+
+export const UPDATE_OWNER = gql`
+  mutation updateOwner($id: Int!, $data: UpdateOwnerInput) {
+    updateOwner(id: $id, data: $data) {
+      id
+    }
+  }
+`;
+
+// mutation updateOwner{
+//   updateOwner(
+//     id: 1
+//     firstname: "Maël"
+//   ) {
+//     id
+//     firstname
+//     lastname
+//   }
+// }

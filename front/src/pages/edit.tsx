@@ -1,15 +1,25 @@
 import { NextPage } from 'next';
-import EditUser from '@components/business/form/EditUser';
-const edit: NextPage = () => {
-  return (
-    <div>
-      <EditUser />
-    </div>
-  );
+import EditOwner from '@components/business/form/EditOwner';
+import { useOwner } from '@providers/ownerProvider';
+import Loader from '@components/ui/progress/loader';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  container: {
+    width: '100vw',
+    maxWidth: '1080px',
+  },
+});
+const Edit: NextPage = () => {
+  const classes = useStyles();
+  const { owner, loading, error } = useOwner();
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+  return <div className={classes.container}>{owner && <EditOwner owner={owner} />}</div>;
 };
 
 export const getServerSideProps = async function getServerSideProps() {
   return { props: {} };
 };
 
-export default edit;
+export default Edit;

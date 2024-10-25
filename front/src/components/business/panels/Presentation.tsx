@@ -154,7 +154,7 @@ function Presentation({ owner }: PresentationType) {
               Je m'appelle{' '}
               <Typography variant="body2" component="span" className={classes.highlight}>
                 <Typography variant="body2" component="span">
-                  {`${owner.firstname} ${owner.lastName}`}
+                  {`${owner.firstname} ${owner.lastname}`}
                 </Typography>
               </Typography>{' '}
             </Typography>

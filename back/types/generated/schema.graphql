@@ -19,6 +19,12 @@ type Experience {
   title: String!
 }
 
+input ImageInput {
+  base64: String
+  name: String
+  type: String
+}
+
 type Logo {
   alt: String!
   color: String!
@@ -28,12 +34,16 @@ type Logo {
   projects: [Project!]!
 }
 
+type Mutation {
+  updateOwner(data: UpdateOwnerInput, id: Int!): Owner
+}
+
 type Owner {
   experiences: [Experience!]!
   firstname: String!
   githubLink: String!
   id: Int!
-  lastName: String!
+  lastname: String!
   linkedinLink: String!
   photo: mediaField!
   projects: [Project!]!
@@ -56,6 +66,16 @@ type Query {
   logos: [Logo!]!
   owner(id: Int!): Owner
   projects: [Project!]!
+}
+
+input UpdateOwnerInput {
+  base64: String
+  firstname: String
+  githubLink: String
+  lastname: String
+  linkedinLink: String
+  photo: ImageInput
+  role: String
 }
 
 """media fied"""

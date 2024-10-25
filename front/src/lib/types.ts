@@ -35,7 +35,7 @@ export interface Experience {
 export interface Owner {
   id: string;
   firstname: string;
-  lastName: string;
+  lastname: string;
   role: string;
   photo: string;
   linkedinLink?: string;

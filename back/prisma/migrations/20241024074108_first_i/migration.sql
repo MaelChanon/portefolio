@@ -2,7 +2,7 @@
 CREATE TABLE "Owner" (
     "id" SERIAL NOT NULL,
     "firstname" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "role" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
     "linkedinLink" TEXT NOT NULL,

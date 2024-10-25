@@ -7,6 +7,7 @@ import { Context } from './types'
 import prisma from './lib/prisma'
 import path from 'path'
 import { staticServe } from './service/static'
+import envs from './lib/env'
 async function context(request: any): Promise<Context> {
   return {
     ...request,
@@ -16,7 +17,6 @@ async function context(request: any): Promise<Context> {
 }
 
 ;(async () => {
-  const PORT = process.env.PORT || 4000
   const app = express()
   const httpServer = createServer(app)
   //faire le bail du middleware
@@ -40,9 +40,9 @@ async function context(request: any): Promise<Context> {
       limit: '300mb',
     },
   })
-  httpServer.listen(PORT, () => {
+  httpServer.listen(envs.PORT, () => {
     console.log(
-      `🚀 Query/Mutation endpoint ready at http://localhost:${PORT}${server.graphqlPath}`,
+      `🚀 Query/Mutation endpoint ready at http://localhost:${envs.PORT}${server.graphqlPath}`,
     )
   })
 })()
