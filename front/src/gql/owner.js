@@ -53,13 +53,12 @@ export const UPDATE_OWNER = gql`
   }
 `;
 
-// mutation updateOwner{
-//   updateOwner(
-//     id: 1
-//     firstname: "Maël"
-//   ) {
-//     id
-//     firstname
-//     lastname
-//   }
-// }
+export const LOGIN = gql`
+  mutation login($password: String!) {
+    login(password: $password) {
+      success
+      token
+      expiresIn
+    }
+  }
+`;

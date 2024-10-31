@@ -191,6 +191,7 @@ function ProjectItem({ project, slide_in_left }: ProjectType): ReactElement {
           muted // Mute the video
           playsInline // Prevent fullscreen on mobile devices
           preload="metadata"
+          key={project.videoLink}
         >
           <source src={project.videoLink} type="video/mp4" />
           Your browser does not support the video tag.

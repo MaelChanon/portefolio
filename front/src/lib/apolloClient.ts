@@ -1,17 +1,11 @@
 import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import getConfig from 'next/config';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function createApolloClient(): ApolloClient<NormalizedCacheObject> {
-  const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
-
   return new ApolloClient({
     ssrMode: typeof window === 'undefined', // True si côté serveur
-    uri:
-      typeof window === 'undefined'
-        ? serverRuntimeConfig.graphqlUrl // URL serveur
-        : publicRuntimeConfig.graphqlUrl, // URL client
+    uri: process.env.NEXT_PUBLIC_GQL_URL,
     cache: new InMemoryCache(),
   });
 }

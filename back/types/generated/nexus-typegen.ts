@@ -41,19 +41,26 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  ImageInput: { // input type
-    base64?: string | null; // String
-    name?: string | null; // String
-    type?: string | null; // String
-  }
   UpdateOwnerInput: { // input type
     base64?: string | null; // String
     firstname?: string | null; // String
     githubLink?: string | null; // String
     lastname?: string | null; // String
     linkedinLink?: string | null; // String
-    photo?: NexusGenInputs['ImageInput'] | null; // ImageInput
+    photo?: NexusGenInputs['fileInput'] | null; // fileInput
     role?: string | null; // String
+  }
+  UpdateProjectInput: { // input type
+    description?: string | null; // String
+    githubLink?: string | null; // String
+    logos?: string | null; // String
+    name?: string | null; // String
+    videoLink?: NexusGenInputs['fileInput'] | null; // fileInput
+  }
+  fileInput: { // input type
+    base64?: string | null; // String
+    name?: string | null; // String
+    type?: string | null; // String
   }
 }
 
@@ -80,6 +87,11 @@ export interface NexusGenObjects {
     ownerId: number; // Int!
     startDate: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
+  }
+  LoginResponse: { // root type
+    expiresIn?: string | null; // String
+    success?: boolean | null; // Boolean
+    token?: string | null; // String
   }
   Logo: { // root type
     alt: string; // String!
@@ -131,6 +143,11 @@ export interface NexusGenFieldTypes {
     startDate: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
   }
+  LoginResponse: { // field return type
+    expiresIn: string | null; // String
+    success: boolean | null; // Boolean
+    token: string | null; // String
+  }
   Logo: { // field return type
     alt: string; // String!
     color: string; // String!
@@ -140,7 +157,9 @@ export interface NexusGenFieldTypes {
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   Mutation: { // field return type
+    login: NexusGenRootTypes['LoginResponse'] | null; // LoginResponse
     updateOwner: NexusGenRootTypes['Owner'] | null; // Owner
+    updateProject: NexusGenRootTypes['Project'] | null; // Project
   }
   Owner: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -183,6 +202,11 @@ export interface NexusGenFieldTypeNames {
     startDate: 'DateTime'
     title: 'String'
   }
+  LoginResponse: { // field return type name
+    expiresIn: 'String'
+    success: 'Boolean'
+    token: 'String'
+  }
   Logo: { // field return type name
     alt: 'String'
     color: 'String'
@@ -192,7 +216,9 @@ export interface NexusGenFieldTypeNames {
     projects: 'Project'
   }
   Mutation: { // field return type name
+    login: 'LoginResponse'
     updateOwner: 'Owner'
+    updateProject: 'Project'
   }
   Owner: { // field return type name
     experiences: 'Experience'
@@ -225,8 +251,15 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    login: { // args
+      password?: string | null; // String
+    }
     updateOwner: { // args
       data?: NexusGenInputs['UpdateOwnerInput'] | null; // UpdateOwnerInput
+      id: number; // Int!
+    }
+    updateProject: { // args
+      data?: NexusGenInputs['UpdateProjectInput'] | null; // UpdateProjectInput
       id: number; // Int!
     }
   }

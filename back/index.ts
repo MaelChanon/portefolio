@@ -23,8 +23,6 @@ async function context(request: any): Promise<Context> {
   const isOnline = false
   const staticFolder = 'public'
   const publicPath = path.join(__dirname, staticFolder)
-  console.log(publicPath)
-  staticServe(app)
   const server = new ApolloServer({
     schema,
     context,

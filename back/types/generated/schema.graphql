@@ -19,10 +19,10 @@ type Experience {
   title: String!
 }
 
-input ImageInput {
-  base64: String
-  name: String
-  type: String
+type LoginResponse {
+  expiresIn: String
+  success: Boolean
+  token: String
 }
 
 type Logo {
@@ -35,7 +35,9 @@ type Logo {
 }
 
 type Mutation {
+  login(password: String): LoginResponse
   updateOwner(data: UpdateOwnerInput, id: Int!): Owner
+  updateProject(data: UpdateProjectInput, id: Int!): Project
 }
 
 type Owner {
@@ -74,8 +76,22 @@ input UpdateOwnerInput {
   githubLink: String
   lastname: String
   linkedinLink: String
-  photo: ImageInput
+  photo: fileInput
   role: String
+}
+
+input UpdateProjectInput {
+  description: String
+  githubLink: String
+  logos: String
+  name: String
+  videoLink: fileInput
+}
+
+input fileInput {
+  base64: String
+  name: String
+  type: String
 }
 
 """media fied"""

@@ -1,6 +1,6 @@
 import { Owner } from '@lib/types';
-import { Button, DialogActions, FormControl, TextField } from '@material-ui/core';
-import { ReactElement, useRef, useState } from 'react';
+import { Button, FormControl, TextField } from '@material-ui/core';
+import { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Presentation from '../panels/Presentation';
 import { fileToBase64 } from '@lib/converter';
@@ -13,12 +13,14 @@ interface EditOwner {
 function EditOwner({ owner }: EditOwner): ReactElement {
   const formControls = useForm();
   const value = formControls.watch();
+  let isModified = false;
   const [updateOwner] = useMutation(UPDATE_OWNER, {
-    onCompleted(data: any) {
-      console.log('blabla');
+    onCompleted: () => {
+      isModified = false;
     },
   });
-  function Blabla({ prop, owner }: { prop: any; owner: Owner }): JSX.Element {
+
+  function Visualization({ prop, owner }: { prop: any; owner: Owner }): JSX.Element {
     const data: Owner = {
       id: owner.id,
       firstname: prop.firstname || owner.firstname,
@@ -30,15 +32,10 @@ function EditOwner({ owner }: EditOwner): ReactElement {
     };
     return <Presentation owner={data} />;
   }
-  const onSubmit = async (data: Owner) => {
-    console.log('testttttttttttt', data);
-    const gqlData: Record<string, any> = { ...data };
-    if (gqlData.photo && data.photo[0]) {
-      gqlData.photo = await fileToBase64(data.photo[0]);
-      console.log('testttttttttttt', gqlData.photo);
-    } else if (gqlData.photo) {
-      gqlData.photo = undefined;
-    }
+  const onSubmit = async (data: any) => {
+    if (!isModified) return;
+    const photo = data.photo && data.photo[0] ? await fileToBase64(data.photo[0]) : undefined;
+    const gqlData: Record<string, any> = { ...data, photo };
     updateOwner({
       variables: {
         id: owner.id,
@@ -49,7 +46,13 @@ function EditOwner({ owner }: EditOwner): ReactElement {
   return (
     <>
       <FormProvider {...formControls}>
-        <form onSubmit={formControls.handleSubmit(onSubmit)} name={'hoursDoneForm'}>
+        <form
+          onChange={() => {
+            isModified = true;
+          }}
+          onSubmit={formControls.handleSubmit(onSubmit)}
+          name={'hoursDoneForm'}
+        >
           <FormControl>
             <TextField
               label="Votre prenom"
@@ -84,7 +87,7 @@ function EditOwner({ owner }: EditOwner): ReactElement {
           </FormControl>
         </form>
       </FormProvider>
-      <Blabla prop={{ ...value }} owner={owner} />
+      <Visualization prop={value} owner={owner} />
     </>
   );
 }

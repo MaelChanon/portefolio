@@ -10,6 +10,8 @@ const envs = {
   PORT: process.env.PORT || '4000',
   STATIC_FOLDER: staticFolder,
   PUBLIC_PATH: path.join(__dirname + '/../', staticFolder),
+  BACKEND_PASSWORD: process.env.BACKEND_PASSWORD,
+  JSON_PASSWORD: process.env.JSON_PASSWORD || 'root',
 }
 
 export default envs

@@ -10,6 +10,11 @@ export interface Logo {
   alt: string;
 }
 
+export interface LoginResponse {
+  success: boolean;
+  token: string;
+  expiresIn: string;
+}
 // Type pour les projets
 export interface Project {
   id: string;
@@ -18,6 +23,7 @@ export interface Project {
   githubLink: string;
   videoLink: string;
   logos: Logo[];
+  [key: string]: any;
 }
 
 // Type pour les expériences professionnelles
