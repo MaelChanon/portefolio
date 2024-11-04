@@ -1,4 +1,4 @@
-interface fileData {
+export interface fileData {
   name: string;
   type: string;
   base64: string;

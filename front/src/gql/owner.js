@@ -15,6 +15,7 @@ export const Owner = {
         description
         githubLink
         videoLink
+        order
         logos {
           id
           photo

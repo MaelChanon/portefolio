@@ -4,10 +4,12 @@ export interface logo {
 
 // Type pour le logo des projets
 export interface Logo {
+  id: number;
   photo: string;
   color: string;
   link: string;
   alt: string;
+  new?: boolean;
 }
 
 export interface LoginResponse {
@@ -17,12 +19,14 @@ export interface LoginResponse {
 }
 // Type pour les projets
 export interface Project {
-  id: string;
+  id?: number;
   name: string;
   description: string;
   githubLink: string;
   videoLink: string;
   logos: Logo[];
+  order: number;
+  new?: boolean;
   [key: string]: any;
 }
 

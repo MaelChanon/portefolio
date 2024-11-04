@@ -23,15 +23,15 @@ model Owner {
 
 //**************************PROJECT***********************
 model Project {
-  id          Int    @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   description String
   githubLink  String
   videoLink   String
-
-  ownerId Int
-  owner   Owner         @relation(fields: [ownerId], name: "projects", references: [id])
-  logos   ProjectLogo[]
+  order       Int           @default(autoincrement())
+  ownerId     Int
+  owner       Owner         @relation(fields: [ownerId], name: "projects", references: [id])
+  logos       ProjectLogo[]
 }
 
 //**************************LOGO**************************

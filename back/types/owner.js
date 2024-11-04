@@ -16,7 +16,11 @@ export const Owner = objectType({
       resolve: async (parent, _, ctx) => {
         return ctx.prisma.owner
           .findUnique({ where: { id: parent.id } })
-          .projects()
+          .projects({
+            orderBy: {
+              order: 'asc',
+            },
+          })
       },
     })
     t.nonNull.list.nonNull.field('experiences', {

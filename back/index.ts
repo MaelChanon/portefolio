@@ -8,6 +8,9 @@ import prisma from './lib/prisma'
 import path from 'path'
 import { staticServe } from './service/static'
 import envs from './lib/env'
+import { applyMiddleware } from 'graphql-middleware'
+import { permissions } from './lib/gqlPermissions'
+
 async function context(request: any): Promise<Context> {
   return {
     ...request,
@@ -20,11 +23,12 @@ async function context(request: any): Promise<Context> {
   const app = express()
   const httpServer = createServer(app)
   //faire le bail du middleware
+  staticServe(app)
   const isOnline = false
   const staticFolder = 'public'
   const publicPath = path.join(__dirname, staticFolder)
   const server = new ApolloServer({
-    schema,
+    schema: isOnline ? applyMiddleware(schema, permissions) : schema,
     context,
     introspection: false,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],

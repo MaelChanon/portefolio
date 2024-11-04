@@ -7,3 +7,11 @@ export const UPDATE_PROJECT = gql`
     }
   }
 `;
+
+export const CREATE_PROJECT = gql`
+  mutation createProject($data: UpdateProjectInput) {
+    createProject(data: $data) {
+      id
+    }
+  }
+`;

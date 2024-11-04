@@ -71,11 +71,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 interface HexagonalIconType {
   logo: Logo;
+  disableLink?: boolean;
 }
-function HexagonalIcon({ logo }: HexagonalIconType): ReactElement {
+function HexagonalIcon({ logo, disableLink }: HexagonalIconType): ReactElement {
   const classes = useStyles();
+  console.log('test', logo.photo);
   return (
-    <a href={logo.link || ''} target="_blank" className={classes.hexagonalIcon}>
+    <a
+      href={logo.link && !disableLink ? logo.link : undefined}
+      target="_blank"
+      className={classes.hexagonalIcon}
+    >
       <div
         className={classes.rHex}
         style={{ '--backgroundColor': logo.color } as React.CSSProperties}

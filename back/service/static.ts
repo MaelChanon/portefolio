@@ -5,10 +5,8 @@ import envs from '../lib/env'
 
 export function staticServe(app: Express) {
   app.use(express.static(envs.PUBLIC_PATH))
-
   // Configuration pour servir index.html pour les routes client
   app.get('*', (req, res, next) => {
-    console.log(req.path)
     if (req.path.startsWith(`/${envs.STATIC_FOLDER}`)) {
       return res.sendFile(
         path.join(

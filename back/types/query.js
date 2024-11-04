@@ -18,7 +18,12 @@ export const queries = extendType({
         return owner
       },
     })
-
+    t.field('ME', {
+      type: 'String',
+      resolve: async (_, { id }, ctx) => {
+        return 'ok'
+      },
+    })
     // Get all projects
     t.nonNull.list.nonNull.field('projects', {
       type: 'Project',

@@ -4,7 +4,7 @@ const secretKey: PrivateKey = envs.JSON_PASSWORD
 export function generateToken(payload: object, options = {}) {
   // Default options
   const defaultOptions = {
-    expiresIn: '1h', // Token expires in 1 hour
+    expiresIn: '24h', // Token expires in 1 hour
     algorithm: 'HS256', // HMAC SHA-256 signing algorithm
   }
   // Merge default options with provided options

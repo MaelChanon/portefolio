@@ -22,8 +22,8 @@ const pathToModel: Record<string, string> = {
   'mots-cles': 'KeyWord',
 };
 const EMPTY_QUERY = gql`
-  query {
-    __typename
+  query ME {
+    ME
   }
 `;
 export async function middleware(req: NextRequest) {
@@ -35,16 +35,16 @@ export async function middleware(req: NextRequest) {
   const paths = req.nextUrl.pathname?.split('/') || [];
   paths.shift();
   if (login) {
-    const apolloClient = initializeApollo();
+    const apolloClient = initializeApollo(login);
 
     try {
       const me = await apolloClient.query({
         query: EMPTY_QUERY,
-        context: {
-          headers: {
-            authorization: `Bearer ${login}`,
-          },
-        },
+        // context: {
+        //   headers: {
+        //     authorization: `Bearer ${login}`,
+        //   },
+        // },
       });
       return NextResponse.next();
     } catch (e) {}

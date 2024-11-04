@@ -9,6 +9,7 @@ export const Project = objectType({
     t.nonNull.string('githubLink')
     t.nonNull.media('videoLink')
     t.nonNull.int('ownerId')
+    t.nonNull.int('order')
     t.nonNull.field('owner', {
       type: 'Owner',
       resolve: (parent, _, ctx) => {

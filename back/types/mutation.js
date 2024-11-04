@@ -1,6 +1,5 @@
 import {
   arg,
-  extendInputType,
   inputObjectType,
   intArg,
   nonNull,
@@ -8,7 +7,6 @@ import {
   stringArg,
 } from 'nexus'
 import { uploadFile, removeFile } from '../lib/files'
-import { kMaxLength } from 'buffer'
 import envs from '../lib/env'
 import { generateToken } from '../lib/jwt'
 const fs = require('fs')
@@ -38,22 +36,15 @@ export const Mutation = objectType({
         })
       },
     })
-
-    t.field('updateProject', {
+    t.field('createProject', {
       type: 'Project',
       args: {
-        id: nonNull(intArg()),
         data: arg({ type: 'UpdateProjectInput' }),
       },
       resolve: async (_, args, ctx) => {
-        let project = undefined
-        const { id, data } = args
+        const { data } = args
+        delete data.order
         if (data.videoLink) {
-          project = await ctx.prisma.project.findUnique({
-            where: {
-              id,
-            },
-          })
           data.videoLink = uploadFile(data.videoLink)
         }
         const values = {
@@ -64,13 +55,54 @@ export const Mutation = objectType({
             return acc
           }, {}),
         }
+        values.ownerId = 1
+        return ctx.prisma.project.create({
+          data: values,
+        })
+      },
+    })
+    t.field('updateProject', {
+      type: 'Project',
+      args: {
+        id: nonNull(intArg()),
+        data: arg({ type: 'UpdateProjectInput' }),
+      },
+      resolve: async (_, args, ctx) => {
+        const { id, data } = args
+        let project = await ctx.prisma.project.findUnique({
+          where: {
+            id,
+          },
+        })
+
+        if (data.videoLink) {
+          data.videoLink = uploadFile(data.videoLink)
+        }
+
+        if (project.order !== data.order) {
+          await ctx.prisma.project.updateMany({
+            where: { order: data.order },
+            data: {
+              order: project.order,
+            },
+          })
+        }
+
+        const values = {
+          ...Object.entries(data).reduce((acc, [key, value]) => {
+            if (value) {
+              acc[key] = value
+            }
+            return acc
+          }, {}),
+        }
         return ctx.prisma.project
-          .update({
+          .updateMany({
             where: { id: Number(id) },
             data: values,
           })
           .then(() => {
-            if (data.videoLink) removeFile(project.videoLink)
+            if (data.videoLink && project) removeFile(project.videoLink)
           })
       },
     })
@@ -89,9 +121,55 @@ export const Mutation = objectType({
       },
       resolve: (_, { password }, ctx) => {
         if (envs.BACKEND_PASSWORD === password) {
+          console.log('bh oui')
           return generateToken({ ok: 'ok' })
         }
         throw new Error('invalid password')
+      },
+    })
+
+    t.field('updateLogo', {
+      type: 'Logo',
+      args: {
+        id: intArg(),
+        data: arg({ type: 'UpdateLogoInput' }),
+      },
+      resolve: async (_, args, ctx) => {
+        const { id, data } = args
+        if (data.photo) {
+          data.photo = uploadFile(data.photo)
+        }
+        const values = {
+          ...Object.entries(data).reduce((acc, [key, value]) => {
+            if (value) {
+              acc[key] = value
+            }
+            return acc
+          }, {}),
+        }
+
+        const existingLogo = id
+          ? await ctx.prisma.logo.findUnique({
+              where: { id: Number(id) },
+            })
+          : undefined
+
+        if (existingLogo) {
+          // If it exists, only prepare the fields that need to be updated
+          return ctx.prisma.logo
+            .update({
+              where: { id: Number(id) },
+              data: values,
+            })
+            .then(() => {
+              if (data.photo && project) removeFile(existingLogo.photo)
+            })
+        } else {
+          // If it doesn't exist, create a new logo
+          return ctx.prisma.logo.create({
+            data: values,
+          })
+        }
       },
     })
   },
@@ -118,6 +196,7 @@ export const UpdateProjectInput = inputObjectType({
     t.string('githubLink')
     t.string('logos')
     t.field('videoLink', { type: 'fileInput' })
+    t.int('order')
   },
 })
 
@@ -127,5 +206,15 @@ export const fileInput = inputObjectType({
     t.string('type')
     t.string('name')
     t.string('base64')
+  },
+})
+
+export const UpdateLogoInput = inputObjectType({
+  name: 'UpdateLogoInput',
+  definition(t) {
+    t.field('photo', { type: 'fileInput' })
+    t.string('alt')
+    t.string('link')
+    t.string('color')
   },
 })

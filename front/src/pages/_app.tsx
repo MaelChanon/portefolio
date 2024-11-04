@@ -11,14 +11,25 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { ApolloProvider } from '@apollo/client';
 import { OwnerProvider } from '@providers/ownerProvider';
+import { withIronSessionSsr } from 'iron-session/next';
+import { ironOptions } from '@lib/session';
+import { getIronSession } from 'iron-session';
+import { GetServerSidePropsContext } from 'next';
 
 require('events').EventEmitter.defaultMaxListeners = 10;
 
 config.autoAddCss = false;
 
-export default function MyApp(props: AppProps) {
+interface AppInitialProps {}
+interface InitialAppProps extends AppProps {
+  token: string;
+}
+
+export default function MyApp(props: InitialAppProps) {
   const { Component, pageProps } = props;
-  const client = initializeApollo();
+  // onst session = (await getIronSession(req, res, ironOptions)) as IUser;
+  // const login = session?.userToken;
+  const client = initializeApollo(props.token);
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -45,3 +56,16 @@ export default function MyApp(props: AppProps) {
     </>
   );
 }
+
+MyApp.getInitialProps = async ({ ctx }: { ctx: GetServerSidePropsContext }) => {
+  const { req, res } = ctx;
+
+  if (req && res) {
+    const session = await getIronSession(req, res, ironOptions);
+    return {
+      token: session.userToken,
+    };
+  }
+
+  return;
+};

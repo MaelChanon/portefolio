@@ -41,6 +41,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  UpdateLogoInput: { // input type
+    alt?: string | null; // String
+    color?: string | null; // String
+    link?: string | null; // String
+    photo?: NexusGenInputs['fileInput'] | null; // fileInput
+  }
   UpdateOwnerInput: { // input type
     base64?: string | null; // String
     firstname?: string | null; // String
@@ -55,6 +61,7 @@ export interface NexusGenInputs {
     githubLink?: string | null; // String
     logos?: string | null; // String
     name?: string | null; // String
+    order?: number | null; // Int
     videoLink?: NexusGenInputs['fileInput'] | null; // fileInput
   }
   fileInput: { // input type
@@ -115,6 +122,7 @@ export interface NexusGenObjects {
     githubLink: string; // String!
     id: number; // Int!
     name: string; // String!
+    order: number; // Int!
     ownerId: number; // Int!
     videoLink: NexusGenScalars['mediaField']; // mediaField!
   }
@@ -157,7 +165,9 @@ export interface NexusGenFieldTypes {
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   Mutation: { // field return type
+    createProject: NexusGenRootTypes['Project'] | null; // Project
     login: NexusGenRootTypes['LoginResponse'] | null; // LoginResponse
+    updateLogo: NexusGenRootTypes['Logo'] | null; // Logo
     updateOwner: NexusGenRootTypes['Owner'] | null; // Owner
     updateProject: NexusGenRootTypes['Project'] | null; // Project
   }
@@ -178,11 +188,13 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     logos: NexusGenRootTypes['Logo'][]; // [Logo!]!
     name: string; // String!
+    order: number; // Int!
     owner: NexusGenRootTypes['Owner']; // Owner!
     ownerId: number; // Int!
     videoLink: NexusGenScalars['mediaField']; // mediaField!
   }
   Query: { // field return type
+    ME: string | null; // String
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
     logos: NexusGenRootTypes['Logo'][]; // [Logo!]!
     owner: NexusGenRootTypes['Owner'] | null; // Owner
@@ -216,7 +228,9 @@ export interface NexusGenFieldTypeNames {
     projects: 'Project'
   }
   Mutation: { // field return type name
+    createProject: 'Project'
     login: 'LoginResponse'
+    updateLogo: 'Logo'
     updateOwner: 'Owner'
     updateProject: 'Project'
   }
@@ -237,11 +251,13 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     logos: 'Logo'
     name: 'String'
+    order: 'Int'
     owner: 'Owner'
     ownerId: 'Int'
     videoLink: 'mediaField'
   }
   Query: { // field return type name
+    ME: 'String'
     experiences: 'Experience'
     logos: 'Logo'
     owner: 'Owner'
@@ -251,8 +267,15 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createProject: { // args
+      data?: NexusGenInputs['UpdateProjectInput'] | null; // UpdateProjectInput
+    }
     login: { // args
       password?: string | null; // String
+    }
+    updateLogo: { // args
+      data?: NexusGenInputs['UpdateLogoInput'] | null; // UpdateLogoInput
+      id?: number | null; // Int
     }
     updateOwner: { // args
       data?: NexusGenInputs['UpdateOwnerInput'] | null; // UpdateOwnerInput

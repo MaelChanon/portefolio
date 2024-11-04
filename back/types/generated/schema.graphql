@@ -35,7 +35,9 @@ type Logo {
 }
 
 type Mutation {
+  createProject(data: UpdateProjectInput): Project
   login(password: String): LoginResponse
+  updateLogo(data: UpdateLogoInput, id: Int): Logo
   updateOwner(data: UpdateOwnerInput, id: Int!): Owner
   updateProject(data: UpdateProjectInput, id: Int!): Project
 }
@@ -58,16 +60,25 @@ type Project {
   id: Int!
   logos: [Logo!]!
   name: String!
+  order: Int!
   owner: Owner!
   ownerId: Int!
   videoLink: mediaField!
 }
 
 type Query {
+  ME: String
   experiences: [Experience!]!
   logos: [Logo!]!
   owner(id: Int!): Owner
   projects: [Project!]!
+}
+
+input UpdateLogoInput {
+  alt: String
+  color: String
+  link: String
+  photo: fileInput
 }
 
 input UpdateOwnerInput {
@@ -85,6 +96,7 @@ input UpdateProjectInput {
   githubLink: String
   logos: String
   name: String
+  order: Int
   videoLink: fileInput
 }
 

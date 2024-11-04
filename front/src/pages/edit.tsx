@@ -3,7 +3,7 @@ import EditOwner from '@components/business/form/EditOwner';
 import { useOwner } from '@providers/ownerProvider';
 import Loader from '@components/ui/progress/loader';
 import { makeStyles } from '@material-ui/core';
-import EditProjects from '@components/business/form/EditProjects';
+import EditProjects from '@components/business/form/editProject/EditProjects';
 
 const useStyles = makeStyles({
   container: {
