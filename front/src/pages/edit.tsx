@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import EditOwner from '@components/business/form/EditOwner';
+import EditExperiences from '@components/business/form/editExperiences/editExperiences';
 import { useOwner } from '@providers/ownerProvider';
 import Loader from '@components/ui/progress/loader';
 import { makeStyles } from '@material-ui/core';
@@ -20,6 +21,7 @@ const Edit: NextPage = () => {
     <div className={classes.container}>
       {owner && <EditOwner owner={owner} />}
       {owner?.projects && <EditProjects projects={owner.projects} />}
+      {owner?.experiences && <EditExperiences experiences={owner.experiences} />}
     </div>
   );
 };

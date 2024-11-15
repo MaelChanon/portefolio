@@ -15,6 +15,8 @@ import { withIronSessionSsr } from 'iron-session/next';
 import { ironOptions } from '@lib/session';
 import { getIronSession } from 'iron-session';
 import { GetServerSidePropsContext } from 'next';
+import { AdapterDayjs as DateAdapter } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 require('events').EventEmitter.defaultMaxListeners = 10;
 
@@ -47,11 +49,13 @@ export default function MyApp(props: InitialAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ApolloProvider client={client}>
-          <OwnerProvider>
-            <Component {...pageProps} />
-          </OwnerProvider>
-        </ApolloProvider>
+        <LocalizationProvider dateAdapter={DateAdapter} adapterLocale="en-gb">
+          <ApolloProvider client={client}>
+            <OwnerProvider>
+              <Component {...pageProps} />
+            </OwnerProvider>
+          </ApolloProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </>
   );

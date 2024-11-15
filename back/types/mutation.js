@@ -2,6 +2,7 @@ import {
   arg,
   inputObjectType,
   intArg,
+  list,
   nonNull,
   objectType,
   stringArg,
@@ -9,6 +10,7 @@ import {
 import { uploadFile, removeFile } from '../lib/files'
 import envs from '../lib/env'
 import { generateToken } from '../lib/jwt'
+import { includes } from 'lodash'
 const fs = require('fs')
 export const Mutation = objectType({
   name: 'Mutation',
@@ -47,6 +49,24 @@ export const Mutation = objectType({
         if (data.videoLink) {
           data.videoLink = uploadFile(data.videoLink)
         }
+        if (data.logos) {
+          await ctx.prisma.projectLogo.deleteMany({
+            where: {
+              projectId: id,
+            },
+          })
+
+          await ctx.prisma.projectLogo.createMany({
+            data: data.logos.map((logoId) => {
+              return {
+                projectId: id,
+                logoId,
+              }
+            }),
+          })
+          delete data.logos
+        }
+
         const values = {
           ...Object.entries(data).reduce((acc, [key, value]) => {
             if (value) {
@@ -87,7 +107,23 @@ export const Mutation = objectType({
             },
           })
         }
+        if (data.logos) {
+          await ctx.prisma.projectLogo.deleteMany({
+            where: {
+              projectId: id,
+            },
+          })
 
+          await ctx.prisma.projectLogo.createMany({
+            data: data.logos.map((logoId) => {
+              return {
+                projectId: id,
+                logoId,
+              }
+            }),
+          })
+          delete data.logos
+        }
         const values = {
           ...Object.entries(data).reduce((acc, [key, value]) => {
             if (value) {
@@ -172,6 +208,38 @@ export const Mutation = objectType({
         }
       },
     })
+    t.crud.deleteOneLogo()
+
+    t.field('updateProjectLogo', {
+      type: 'Boolean',
+      args: {
+        id: nonNull(intArg()),
+        data: nonNull(list('Int')),
+      },
+      resolve: async (_, args, ctx) => {
+        const { id, data } = args
+
+        return true
+        // return await prisma.user.update({
+        //   where: { id },
+        //   data: {
+        //     ProjectLogo: {
+        //       create: data.map((data) => ({
+        //         logoId: id,
+        //         projectId: data,
+        //       })),
+        //     },
+        //   },
+        //   include: {
+        //     UserRole: {
+        //       include: {
+        //         role: true,
+        //       },
+        //     },
+        //   },
+        // })
+      },
+    })
   },
 })
 
@@ -197,6 +265,7 @@ export const UpdateProjectInput = inputObjectType({
     t.string('logos')
     t.field('videoLink', { type: 'fileInput' })
     t.int('order')
+    t.list.int('logos')
   },
 })
 
@@ -216,5 +285,11 @@ export const UpdateLogoInput = inputObjectType({
     t.string('alt')
     t.string('link')
     t.string('color')
+  },
+})
+export const DeleteWhereInput = inputObjectType({
+  name: 'DeleteWhereInput',
+  definition(t) {
+    t.int('id')
   },
 })

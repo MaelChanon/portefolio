@@ -7,6 +7,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+input DeleteWhereInput {
+  id: Int
+}
+
 type Experience {
   compagny: String!
   description: String!
@@ -34,12 +38,18 @@ type Logo {
   projects: [Project!]!
 }
 
+input LogoWhereUniqueInput {
+  id: Int
+}
+
 type Mutation {
   createProject(data: UpdateProjectInput): Project
+  deleteOneLogo(where: LogoWhereUniqueInput!): Logo
   login(password: String): LoginResponse
   updateLogo(data: UpdateLogoInput, id: Int): Logo
   updateOwner(data: UpdateOwnerInput, id: Int!): Owner
   updateProject(data: UpdateProjectInput, id: Int!): Project
+  updateProjectLogo(data: [Int]!, id: Int!): Boolean
 }
 
 type Owner {
@@ -94,7 +104,7 @@ input UpdateOwnerInput {
 input UpdateProjectInput {
   description: String
   githubLink: String
-  logos: String
+  logos: [Int]
   name: String
   order: Int
   videoLink: fileInput

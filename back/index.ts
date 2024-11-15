@@ -32,6 +32,7 @@ async function context(request: any): Promise<Context> {
     context,
     introspection: false,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    debug: true,
   })
   await server.start()
   server.applyMiddleware({

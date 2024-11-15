@@ -15,3 +15,9 @@ export const CREATE_PROJECT = gql`
     }
   }
 `;
+
+export const UPDATE_PROJECT_LOGOS = gql`
+  mutation updateProjectLogo($id: Int!, $data: [Int]!) {
+    updateProjectLogo(id: $id, data: $data)
+  }
+`;

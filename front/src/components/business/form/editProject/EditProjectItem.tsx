@@ -1,30 +1,25 @@
-import { Owner, Project } from '@lib/types';
-import {
-  Button,
-  ButtonBase,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@material-ui/core';
+import { Logo, Project } from '@lib/types';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { ReactElement, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import Presentation from '../../panels/Presentation';
 import { fileToBase64 } from '@lib/converter';
 import { useMutation } from '@apollo/client';
 import { UPDATE_PROJECT, CREATE_PROJECT } from '@gql';
 import ProjectItem from '../../card/ProjectItem';
+import LogoList from '@components/business/card/Logos/LogoList';
+import HexagonalIcon from '@components/ui/icon/HexagonalIcon';
+import { useLogos } from '@providers/logosProvider';
+import Loader from '@components/ui/progress/loader';
+import { ProjectProvider, useProject } from '@providers/projectProvider';
 
 function Visualization({
   prop,
-  project,
   slide_in_left,
 }: {
   prop: any;
-  project: Project;
   slide_in_left: boolean;
 }): JSX.Element {
+  const { project } = useProject();
   const data: Project = {
     id: project.id,
     name: prop.name || project.name,
@@ -48,86 +43,118 @@ function EditProjectItem({
 }: {
   project: Project;
   slide_in_left: boolean;
-  change_order: (value: number | undefined) => void;
+  change_order: (value: number) => void;
   max_order: number;
 }): ReactElement {
-  const formControls = useForm();
+  const { logos: data, loading } = useLogos();
+  const formControls = useForm({
+    defaultValues: {
+      name: project.name,
+      description: project.description,
+      githubLink: project.githubLink,
+      order: project.order,
+      videoLink: undefined,
+    },
+  });
   const value = formControls.watch();
+
   const [updateProject] = useMutation(project.new ? CREATE_PROJECT : UPDATE_PROJECT, {});
-  // if(value.form)
+  const [openLogoList, setOpenLogoList] = useState<boolean>(false);
+  const [logoList, setLogoList] = useState<Logo[]>(project.logos);
 
   const onSubmit = async (data: any) => {
     const videoLink =
       data.videoLink && data.videoLink[0] ? await fileToBase64(data.videoLink[0]) : undefined;
     const variables: any = {
-      data: { ...data, videoLink },
+      data: {
+        ...data,
+        videoLink,
+        logos: logoList !== project.logos ? logoList.map((logo) => logo.id) : [],
+      },
     };
     if (!project.new) {
       variables.id = project.id;
     }
+    variables.logos = logoList !== project.logos ? logoList.map((logo) => logo.id) : [];
+    console.log(variables);
     updateProject({
       variables,
     });
   };
+  if (loading || !data) return <Loader />;
   return (
     <>
-      <FormProvider {...formControls}>
-        <form onSubmit={formControls.handleSubmit(onSubmit)} name={'projectForm'}>
-          <FormControl>
-            <TextField
-              label="titre"
-              defaultValue={project.name}
-              {...formControls.register('name')}
-            />
-            <TextField
-              label="description"
-              defaultValue={project.description}
-              {...formControls.register('description')}
-            />
-            <TextField
-              label="lien vers la page github"
-              defaultValue={project.githubLink}
-              {...formControls.register('githubLink')}
-            />
-
-            <input type="file" {...formControls.register('videoLink')} />
-
-            {!project.new && (
-              <Controller
-                control={formControls.control}
-                name="order"
-                defaultValue={project.order}
-                render={({ field }) => (
-                  <FormControl>
-                    <InputLabel id="order">Ordre</InputLabel>
-                    <Select
-                      {...formControls.register('order')}
-                      {...field}
-                      labelId="order"
-                      label="order"
-                      defaultValue={project.order}
-                      onChange={(event) => {
-                        field.onChange(event); // important to update form state
-                        change_order(event?.target?.value as number);
-                      }}
-                    >
-                      {Array.from({ length: max_order }, (_, i) => (
-                        <MenuItem key={i} value={i + 1}>
-                          {i + 1}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
+      <ProjectProvider project={project}>
+        {openLogoList && (
+          <LogoList
+            enabledLogos={logoList}
+            onClose={(logos) => {
+              setLogoList(data.filter((logo) => logos.includes(logo.id)));
+              setOpenLogoList(false);
+            }}
+          />
+        )}
+        <FormProvider {...formControls}>
+          <form onSubmit={formControls.handleSubmit(onSubmit)} name={'projectForm'}>
+            <FormControl>
+              <TextField label="titre" {...formControls.register('name')} />
+              <TextField label="description" {...formControls.register('description')} />
+              <TextField
+                label="lien vers la page github"
+                {...formControls.register('githubLink')}
               />
-            )}
-            <Button disableRipple color="primary" autoFocus={true} type="submit">
-              Enregistrer
-            </Button>
-          </FormControl>
-        </form>
-      </FormProvider>
-      <Visualization prop={value} project={project} slide_in_left={slide_in_left} />
+
+              <input type="file" {...formControls.register('videoLink')} />
+
+              {!project.new && (
+                <Controller
+                  control={formControls.control}
+                  name="order"
+                  render={({ field }) => (
+                    <FormControl>
+                      <InputLabel id="order">Ordre</InputLabel>
+                      <Select
+                        {...formControls.register('order')}
+                        {...field}
+                        labelId="order"
+                        label="order"
+                        onChange={(event) => {
+                          field.onChange(event); // important to update form state
+                          change_order(event?.target?.value as number);
+                        }}
+                      >
+                        {Array.from({ length: max_order }, (_, i) => (
+                          <MenuItem key={i} value={i + 1}>
+                            {i + 1}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+              )}
+              <div>
+                {logoList.map((logo) => (
+                  <HexagonalIcon key={logo.id} logo={logo} disableLink={true} />
+                ))}
+              </div>
+              <Button
+                disableRipple
+                color="primary"
+                onClick={() => {
+                  setOpenLogoList(true);
+                }}
+              >
+                Ajouter
+              </Button>
+              <Button disableRipple color="primary" autoFocus={true} type="submit">
+                Enregistrer
+              </Button>
+            </FormControl>
+          </form>
+        </FormProvider>
+        <Visualization prop={value} slide_in_left={slide_in_left} />
+      </ProjectProvider>
     </>
   );
 }

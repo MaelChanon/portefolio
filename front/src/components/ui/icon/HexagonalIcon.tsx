@@ -88,7 +88,7 @@ function HexagonalIcon({ logo, disableLink }: HexagonalIconType): ReactElement {
       >
         <div className={classes.rHexInner}></div>
       </div>
-      <Image src={logo.photo} alt={logo.alt} width={75} height={75} />
+      <Image src={logo.photo} alt={logo.alt || ''} width={75} height={75} />
     </a>
   );
 }

@@ -39,6 +39,7 @@ export interface Experience {
   company: string;
   title: string;
   description: string;
+  new?: boolean;
 }
 
 // Type pour le propriétaire (Owner)

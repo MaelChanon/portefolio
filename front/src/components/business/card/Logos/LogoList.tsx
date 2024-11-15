@@ -1,15 +1,14 @@
 import HexagonalIcon from '@compenents/ui/icon/HexagonalIcon';
-import { ReactElement, useEffect, useRef, useState } from 'react';
-import Github from '@compenents/ui/logo/Github';
 import { makeStyles } from '@material-ui/core/styles';
-import { ButtonBase, Typography } from '@material-ui/core';
-import theme from '@lib/theme';
+import { ButtonBase } from '@material-ui/core';
 import { Logo } from '@lib/types';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_LOGOS } from '@gql';
 import Loader from '@components/ui/progress/loader';
 import LogoEditor from './LogoEditor';
 import AddIcon from '@mui/icons-material/Add';
+import Checkbox from '@material-ui/core/Checkbox';
+import CloseButton from '@components/ui/button/closeButton';
+import { useLogos } from '@providers/logosProvider';
+import { useState } from 'react';
 const useStyles = makeStyles((theme) => ({
   container: {
     width: '100vw',
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1,
+    zIndex: 2,
     position: 'fixed',
     top: '50%',
     right: '50%',
@@ -26,61 +25,148 @@ const useStyles = makeStyles((theme) => ({
   mainContainer: {
     width: '1080px',
     height: '800px',
-    backgroundColor: 'blue',
     display: 'flex',
+    /* From https://css.glass */
+    background: 'rgba(11, 16, 36, 0.94)',
+    borderRadius: '16px',
+    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+    backdropFilter: 'blur(20px)',
+    // -webkit-backdrop-filter: blur(20px);
+    border: '1px solid rgba(11, 16, 36, 0.3)',
+    position: 'relative',
+  },
+  closeButton: {
+    position: 'absolute !important' as any,
+    top: 0,
+    right: 0,
+    zIndex: 2,
   },
   logosContainer: {
     width: '60%',
+    height: 'fit-content',
+    alignItems: 'center',
     display: 'flex',
+    marginTop: '5px',
+    marginLeft: '5px',
+    gap: '15px',
   },
   logoContainer: {
     height: 'fit-content',
   },
   logoEditor: {
     width: '40%',
+    position: 'relative',
+
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: '10%',
+      height: '80%',
+      width: '2px',
+      backgroundColor: '#cfc9ba',
+    },
+  },
+  addLogo: {
+    width: '50px',
+    height: '50px',
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: '0.3',
+
+    '& svg': {
+      width: '100%',
+      borderRadius: '50%',
+      opacity: '0.3',
+
+      height: '100%',
+    },
+    '&:hover svg': {
+      background: '#74ed8e',
+    },
   },
 }));
 interface queryData {
   logos: Logo[];
 }
-function LogoList(): JSX.Element {
-  const { data, loading } = useQuery<queryData>(GET_LOGOS);
-  const [logo, setLogo] = useState<Logo | undefined>(undefined);
-  console.log(data);
+interface LogoListType {
+  onClose: (logos: number[]) => void;
+  enabledLogos: Logo[];
+}
+function LogoList({ onClose, enabledLogos }: LogoListType): JSX.Element {
+  const { logos: data, loading } = useLogos();
+  const [logos, setLogos] = useState<Logo[]>([]);
+  const [editedLogo, setEditedLogo] = useState<Logo | undefined>(undefined);
+  const [enabledLogoIds, setEnabledLogoIds] = useState<number[]>(
+    enabledLogos.map((logo) => logo.id)
+  );
+
   const classes = useStyles();
+  if (data && logos.length == 0) {
+    setLogos(data);
+  }
   return (
     <div className={classes.container}>
       <div className={classes.mainContainer}>
         {loading && <Loader />}
+        <CloseButton
+          className={classes.closeButton}
+          onClose={() => {
+            onClose(enabledLogoIds);
+          }}
+        />
 
         <div className={classes.logosContainer}>
-          {data &&
-            data.logos.map((logo: Logo) => (
+          {logos.map((logo: Logo) => (
+            <div key={logo.id}>
               <ButtonBase
                 onClick={() => {
-                  setLogo(logo);
+                  setEditedLogo(logo);
                 }}
                 className={classes.logoContainer}
-                key={logo.id}
               >
                 <HexagonalIcon disableLink={true} logo={logo} />
               </ButtonBase>
-            ))}
-          <AddIcon
-            onClick={() => {
-              setLogo({
-                id: -1,
-                alt: '',
-                color: '',
-                link: '',
-                photo: '',
-                new: true,
-              });
-            }}
-          />
+              <div>
+                <Checkbox
+                  checked={enabledLogoIds.includes(logo.id)}
+                  onChange={() => {
+                    if (enabledLogoIds.includes(logo.id)) {
+                      setEnabledLogoIds(enabledLogoIds.filter((item) => item !== logo.id));
+                    } else {
+                      setEnabledLogoIds([...enabledLogoIds, logo.id]);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+          <div className={classes.addLogo}>
+            <AddIcon
+              onClick={() => {
+                setEditedLogo({
+                  id: -1,
+                  alt: '',
+                  color: '',
+                  link: '',
+                  photo: '',
+                  new: true,
+                });
+              }}
+            />
+          </div>
         </div>
-        <div className={classes.logoEditor}>{logo && <LogoEditor logo={logo} />}</div>
+        <div className={classes.logoEditor}>
+          {editedLogo && (
+            <LogoEditor
+              logo={editedLogo}
+              onDelete={() => {
+                setLogos(logos.filter((logoItem) => logoItem.id != editedLogo.id));
+                setEditedLogo(undefined);
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

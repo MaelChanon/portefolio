@@ -5,7 +5,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import HexagonalIcon from '@components/ui/icon/HexagonalIcon';
 import { useMutation } from '@apollo/client';
-import { UPDATE_LOGO } from '@gql';
+import { DELETE_LOGO, UPDATE_LOGO } from '@gql';
 import { fileData, fileToBase64 } from '@lib/converter';
 
 type logoForm = Omit<Logo, 'id' | 'photo'> & {
@@ -27,7 +27,10 @@ const useStyles = makeStyles({
   mainContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 function Vizualisation({ logoValue, logo }: { logoValue: logoForm; logo: Logo }) {
@@ -44,13 +47,18 @@ function Vizualisation({ logoValue, logo }: { logoValue: logoForm; logo: Logo })
   return <HexagonalIcon logo={icon} disableLink={true} />;
 }
 
-function LogoEditor({ logo }: { logo: Logo }): ReactElement {
+function LogoEditor({ logo, onDelete }: { logo: Logo; onDelete: () => void }): ReactElement {
   const classes = useStyles();
   const formControls = useForm<logoForm>({});
   const { reset } = formControls;
   const values = formControls.watch();
   const [updateLogo] = useMutation<UpdateLogoType>(UPDATE_LOGO, {
-    onCompleted: (logo) => {},
+    onError: (err) => {},
+  });
+  const [deleteLogo] = useMutation<any>(DELETE_LOGO, {
+    onCompleted: () => {
+      onDelete();
+    },
     onError: (err) => {},
   });
   const onsubmit = async (value: logoForm) => {
@@ -65,7 +73,19 @@ function LogoEditor({ logo }: { logo: Logo }): ReactElement {
       variables,
     });
   };
-
+  const onDeleteLogo = () => {
+    console.log(logo);
+    if (logo.new) {
+      return onDelete();
+    }
+    deleteLogo({
+      variables: {
+        where: {
+          id: logo.id,
+        },
+      },
+    });
+  };
   useEffect(() => {
     reset({
       link: logo.link,
@@ -80,12 +100,13 @@ function LogoEditor({ logo }: { logo: Logo }): ReactElement {
           <FormControl>
             <input type="file" {...formControls.register('photo')} />
             <Controller
-              {...formControls.register('color')}
-              defaultValue={values.color}
+              name={formControls.register('color').name}
+              defaultValue={values.color || ''}
               render={({ field: { value, onChange } }) => (
                 <>
                   <HexColorPicker color={value} onChange={onChange} />
-                  <TextField value={value} onChange={onChange} />
+
+                  <TextField value={value} />
                 </>
               )}
             />
@@ -103,8 +124,9 @@ function LogoEditor({ logo }: { logo: Logo }): ReactElement {
             <Button disableRipple color="primary" autoFocus={true} type="submit">
               {logo.new ? 'Créer' : 'Modifier'}
             </Button>
-            <Button disableRipple color="primary" autoFocus={true} type="submit">
-              {logo.new ? 'Créer' : 'Modifier'}
+
+            <Button disableRipple color="primary" autoFocus={true} onClick={onDeleteLogo}>
+              Supprimer
             </Button>
           </FormControl>
         </form>

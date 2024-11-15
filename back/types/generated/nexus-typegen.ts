@@ -41,6 +41,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  DeleteWhereInput: { // input type
+    id?: number | null; // Int
+  }
+  LogoWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
   UpdateLogoInput: { // input type
     alt?: string | null; // String
     color?: string | null; // String
@@ -59,7 +65,7 @@ export interface NexusGenInputs {
   UpdateProjectInput: { // input type
     description?: string | null; // String
     githubLink?: string | null; // String
-    logos?: string | null; // String
+    logos?: Array<number | null> | null; // [Int]
     name?: string | null; // String
     order?: number | null; // Int
     videoLink?: NexusGenInputs['fileInput'] | null; // fileInput
@@ -166,10 +172,12 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createProject: NexusGenRootTypes['Project'] | null; // Project
+    deleteOneLogo: NexusGenRootTypes['Logo'] | null; // Logo
     login: NexusGenRootTypes['LoginResponse'] | null; // LoginResponse
     updateLogo: NexusGenRootTypes['Logo'] | null; // Logo
     updateOwner: NexusGenRootTypes['Owner'] | null; // Owner
     updateProject: NexusGenRootTypes['Project'] | null; // Project
+    updateProjectLogo: boolean | null; // Boolean
   }
   Owner: { // field return type
     experiences: NexusGenRootTypes['Experience'][]; // [Experience!]!
@@ -229,10 +237,12 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createProject: 'Project'
+    deleteOneLogo: 'Logo'
     login: 'LoginResponse'
     updateLogo: 'Logo'
     updateOwner: 'Owner'
     updateProject: 'Project'
+    updateProjectLogo: 'Boolean'
   }
   Owner: { // field return type name
     experiences: 'Experience'
@@ -270,6 +280,9 @@ export interface NexusGenArgTypes {
     createProject: { // args
       data?: NexusGenInputs['UpdateProjectInput'] | null; // UpdateProjectInput
     }
+    deleteOneLogo: { // args
+      where: NexusGenInputs['LogoWhereUniqueInput']; // LogoWhereUniqueInput!
+    }
     login: { // args
       password?: string | null; // String
     }
@@ -283,6 +296,10 @@ export interface NexusGenArgTypes {
     }
     updateProject: { // args
       data?: NexusGenInputs['UpdateProjectInput'] | null; // UpdateProjectInput
+      id: number; // Int!
+    }
+    updateProjectLogo: { // args
+      data: Array<number | null>; // [Int]!
       id: number; // Int!
     }
   }

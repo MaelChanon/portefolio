@@ -23,3 +23,10 @@ export const UPDATE_LOGO = gql`
     }
   }
 `;
+export const DELETE_LOGO = gql`
+  mutation deleteOneLogo($where: LogoWhereUniqueInput!) {
+    deleteOneLogo(where: $where) {
+      id
+    }
+  }
+`;

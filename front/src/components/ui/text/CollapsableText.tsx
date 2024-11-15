@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -17,9 +17,10 @@ function CollapsableText({
   color,
   defaultExpanded,
 }: CollapsableTextType): ReactElement {
+  const [expanded] = useState<boolean>(!!defaultExpanded);
   return (
     <Accordion
-      {...(defaultExpanded ? { defaultExpanded: true } : {})}
+      defaultExpanded={expanded}
       sx={{
         bgcolor: 'rgba(163, 126, 185, 0.1)',
         borderRadius: '16px',
